@@ -1,0 +1,87 @@
+<section class="banner"
+         style="background-image: url(/images/photos/user_stories_picture.jpg);">
+  <h1>User Stories</h1>
+
+  <h3>
+    User stories are real life case studies that detail the ways Energy Access
+    Explorer is being used to accelerate access to electricity across the world.
+  </h3>
+
+</section>
+
+<section>
+  <div id="banner-tabs">
+    <a class="tab" href="#planning">Strategic&nbsp;Energy&nbsp;Planning</a>
+    <a class="tab" href="#market">Market&nbsp;Identification</a>
+    <a class="tab" href="#investment">Investment&nbsp;for&nbsp;Impact</a>
+  </div>
+
+  <div id="market"
+       class="tab-content">
+    <p>
+      Off grid and mini grid developers may use Energy Access Explorer
+      to better assess the level of service needed. Understanding where
+      their customers are likely to be located and where there is a
+      concentration of demand, will help off-grid developers identify
+      market opportunities.
+    </p>
+  </div>
+
+  <div id="planning"
+       class="tab-content">
+    <p>
+      Analysts and/or decision makers within energy planning institutes
+      Rural Electrification Agency, planning unit of Energy Ministry
+      etc.) may use the tool to improve linking electrification and
+      socio-economic development to meet the needs of the poor. Energy
+      Access Explorer may complement the cost optimization planning
+      tools these agencies use, to get a more bottom-up representation
+      of affordability and demand. Further, Energy Access Explorer can
+      serve as a database that aggregates up-to-date information. This
+      can help reduce high transaction costs for data aggregation and
+      sharing.
+    </p>
+  </div>
+
+  <div id="investment"
+       class="tab-content">
+    <p>
+      Analysts and/or decision makers within development finance
+      institutions, impact investors, donors can use Energy Access
+      Explorer to understand better where to most effectively channel
+      funds into electrification efforts to ensure that no one is left
+      behind.
+    </p>
+  </div>
+</section>
+
+<script>
+  (async function() {
+    const tabs = document.querySelectorAll('#banner-tabs .tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    for (let t of tabs) {
+      let href = t.getAttribute('href');
+
+      await t.addEventListener('mouseup', function(e) {
+        tabs.forEach(tt => tt.classList.remove('active'));
+
+        contents.forEach(c => {
+          if (href === '#' + c.id) {
+            c.style.display = 'block';
+          } else {
+            c.style.display = 'none';
+          }
+        });
+
+        this.classList.add('active');
+      });
+
+      if (location.hash === href) {
+        let event = document.createEvent('HTMLEvents');
+        event.initEvent('mouseup', true, true);
+        t.dispatchEvent(event);
+      }
+    }
+  })();
+</script>
