@@ -1,7 +1,7 @@
 include default.mk
 
 start:
-	@mustache-server -port ${WEB_PORT}
+	@go run mustache-server.go -port ${WEB_PORT}
 
 stop:
 	-@lsof -t -i :${WEB_PORT} | xargs -i kill {}
