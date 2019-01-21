@@ -1,3 +1,11 @@
+# WEB_PORT = 8000
+#
+# SRV_USER = username
+# SRV_SERVER = example.org
+# SRV_DEST = /srv/http/example
+#
+# or ...
+#
 include default.mk
 
 start:
