@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+# Read ./routes.tsv and create an a tree of static HTML mocking the
+# ./templates directory.
+#
+# Then sync the ./public directory containing the static assets
+# (images, stylesheets etc...)
+
+address=$1
+
+if [ ! -f routes.tsv ]; then
+    echo "No 'routes.tsv' file"
+    exit 1
+fi
+
+if [ -d dist ]; then
+    echo "Emptying 'dist'"
+    rm -Rf dist/*
+else
+    mkdir -p dist
+fi
+
+while read path; do
+    echo "-> $path"
+
+    mkdir -p dist$path
+
+    curl --silent --fail -o dist$path/index.html $address$path || \
+        (echo "   Failed to get $path" && rm -R dist$path)
+
+done <routes.tsv
+
+if [ -d assets ]; then
+    echo "Syncing 'assets/ -> dist'"
+    rsync -r --copy-links assets/ dist
+fi
