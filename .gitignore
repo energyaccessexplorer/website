@@ -1,3 +1,5 @@
 /default.mk
 /dist
-/public/lib/
+/assets/lib/
+/assets/images/logos/
+/assets/images/photos/
