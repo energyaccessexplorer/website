@@ -3,7 +3,7 @@
 # Read ./routes.tsv and create an a tree of static HTML mocking the
 # ./templates directory.
 #
-# Then sync the ./public directory containing the static assets
+# Then sync the ./assets directory containing the static assets
 # (images, stylesheets etc...)
 
 address=$1

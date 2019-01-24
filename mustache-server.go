@@ -30,7 +30,7 @@ func main() {
 	flag.StringVar(&port, "port", "9876", "Port to run on.")
 	flag.Parse()
 
-	web.Config.StaticDir = "public/"
+	web.Config.StaticDir = "assets/"
 
 	web.Get("/(.*)", all)
 
