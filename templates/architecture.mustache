@@ -1,0 +1,202 @@
+<section>
+  <h1>Architecture</h1>
+
+  <div id="text-table-of-contents">
+    <ul>
+      <li><a href="#intro">1. Intro</a></li>
+      <li><a href="#architecture">2. Architecture</a></li>
+      <li><a href="#user-flow">3. Tool user flow</a></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2 id="intro">1. Intro</h2>
+  <div>
+    <p>
+      Energy Access Explorer's architecture is focused on simplicity and
+      modularity. This is achieved by a very fine-grained selection of software and
+      keeping the code independent of specific services and libraries
+    </p>
+
+    <p>
+      The needs of the project imply the nature of the infrastructure. It was built
+      "from the ground up".
+    </p>
+
+    <p>
+      Several aspects were required
+    </p>
+
+    <ul>
+      <li>realtime analysis</li>
+      <li>constant re-calculations due to paramameter changes</li>
+      <li>the analysis to cover the entire country's area</li>
+    </ul>
+
+    <p>
+      Which resulted in the analysis being generated on the clientside instead (of
+      requesting a server for recalculations and transfering large raster files every
+      parameter change). Hence making a traditional frontend-backend application and
+      other multiple services unnecessary.
+    </p>
+
+    <p>
+      To minimize the initial data-transfer size several optimizations of the datasets
+      must be made by the platform administrators. In short:
+    </p>
+
+    <pre style="font-family: monospace; max-width: 60em; margin: auto;">
+      |--------------------+------------+-------------------------------+-----------------------|
+      | DATA TYPE          |            | SPECIFIC PROCESS              | RESULT DATASETS       |
+      |--------------------|            |-------------------------------+-----------------------|
+      |                    |            |                               |                       |
+      | polygons (geojson) |            | simplify geometry             | admin polygons        |
+      |                    |            |                               |                       |
+      | eg. adminitration  |            |                               |                       |
+      |     boundaries     |            |                               |                       |
+      |                    |            |                               |                       |
+      |--------------------+------------+-------------------------------+-----------------------|
+      |                    |            |                               |                       |
+      | raster (GeoTiff)   |            | normalize to global values    |                       |
+      |                    |            | and assign smallest/optimal   | population raster     |
+      | eg. population     |            | number type                   |                       |
+      |    density         |            |                               |                       |
+      |                    |            | UInt32 for population         |                       |
+      |                    |            |                               |                       |
+      |--------------------| CLIP to    |-------------------------------+-----------------------|
+      |                    | country    |                               |                       |
+      | points (geojson)   | boundaries |                               | schools points        |
+      |                    |            |                               |                       |
+      | eg. schools        |            |                               | schools raster        |
+      |                    |            | generate proximity raster     |                       |
+      |--------------------|            |                               |-----------------------|
+      |                    |            | UInt16 for all proximities    |                       |
+      | polyline (geojson) |            |                               | transmission polyline |
+      |                    |            |                               |                       |
+      | eg. transmission   |            |                               | transmission raster   |
+      |                    |            |                               |                       |
+      |--------------------+------------+-------------------------------+-----------------------|
+    </pre>
+
+
+    <p>
+      Note: Given the amount of combinations of parameters, an attempt to generate a
+      caching schema is practically impossible.
+    </p>
+  </div>
+</section>
+
+
+<section>
+  <h2 id="architecture">2. Architecture</h2>
+  <div>
+    <p>
+      The architecture of Energy Access Explorer is focused on a "simplicity and
+      standards first" point of view. The following diagram will be explained below.
+    </p>
+
+    <pre style="font-family: monospace; max-width: 45em; margin: auto;">
+                PostrgreSQL DB
+
+     _________________|_________________
+     |                                 |
+
+ PostgREST ADMIN                PostgREST PUBLIC
+   instance                        instance
+
+     |                                 |
+  ___|_________________________________|____
+  |                                        |
+  |                 NGINX                  |
+  |________________________________________|
+     |                                 |
+     |                         ________|__________________________
+     |                         |                |                |
+
+CMS Admin                   Website           Tool        (Other Clients)
+
+                                                |________________|
+                                                         |
+                                                         |
+
+                                              storage-providers (eg S3)
+    </pre>
+
+    <p>
+      Server Infrastructure
+    </p>
+
+    <p>
+      The <a href="http://postgrest.org/">PostgREST</a> project offers automatic
+      REST API generation. It also provides authentication mechanisms via
+      standard methods (<a href="https://jwt.io/">JWT</a>).
+    </p>
+
+    <p>
+      Given this advantage, data validation (e.g. data type checks, allowed character
+      checks, referential integrity. More information
+	  <a href="https://en.wikipedia.org/wiki/Data_validation">here</a>) and permissions
+      (e.g. keeping unauthenticated users from editing the database or keeping private
+      content that is yet not ready to be published. More information
+	  <a href="https://www.postgresql.org/docs/11/user-manag.html">here</a> and
+	  <a href="https://www.postgresql.org/docs/11/ddl-rowsecurity.html">here</a>)
+      are delegated to the PostgreSQL database. <b><b>There is no backend
+      code</b></b>. Usually there is an entire project written in a programming
+      language/framework like Python/Ruby/NodeJS/Java handling the above. Our
+      schema is much simpler: The database is set in native SQL and PostgREST
+      handles the API and HTTP server.
+    </p>
+
+    <p>
+      Then, an <a href="https://www.nginx.com/">NGINX</a> instance is set as a
+      proxy to handle domain resolution, caching directives for static assets
+      (images, libraries and other content which does not require processing [as
+      will be the case for the website]) etc. Optionally, since it could be
+      hosted on a different server, the NGINX instance could serve the rest of
+      infrastructure.
+    </p>
+
+    <p>
+      Following the same philosophy,
+      the <a href="https://energyaccessexplorer.org">website</a> is deployed on
+      static <a href="https://github.com/energyaccessexplorer/energyaccessexplorer.github.io">HTML/CSS</a>
+      and built with a
+      basic <a href="https://github.com/energyaccessexplorer/website">templating
+      engine</a>. There is no server generating the website upon every
+      re-spawn. Therefore, the website can be hosted absolutely separately.
+    </p>
+
+    <p>
+      The <a href="https://energyaccessexplorer.org/maps-and-data/countries">Tool</a>
+      and <a href="https://admin.energyaccessexplorer.org">CMS</a> themselves
+      are also built with no backend code. They are written in plain JavaScript
+      (ES6) and fetch the data from the API. The source code can be
+      found <a href="https://github.com/energyaccessexplorer/frontend">here</a>
+      and <a href="https://github.com/energyaccessexplorer/admin">here</a>,
+      respectively.
+    </p>
+
+    <p>
+      Finally, the database code, which is plain SQL (for PostgreSQL) has been
+      published <a href="https://github.com/energyaccessexplorer/database">here</a>.
+    </p>
+  </div>
+</section>
+
+
+<section>
+  <h2 id="user-flow">3. Tool user flow</h2>
+  <div>
+    <p>
+      A normal user/client workflow is simple and linear:
+    </p>
+
+    <ol style="margin: auto; max-width: 42em;">
+      <li>enters website and  navigates to the tool and selects a country</li>
+      <li>fetches the country-specific datasets details from the PostgREST public API</li>
+      <li>fetches data files from the storage providers (S3, etc)</li>
+      <li>generates analysis for the rest of the session on his/her computer.</li>
+    </ol>
+  </div>
+</section>
