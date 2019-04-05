@@ -158,6 +158,25 @@ button a {
   height: 120px;
 }
 
+#gapps-ask {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  font-size: 1.2em;
+  height: 4em;
+  line-height: 4em;
+  text-align: center;
+  width: 100%;
+  background-color: var(--the-redish-gray);
+  color: var(--the-white);
+  z-index: 10;
+}
+
+#gapps-ask button {
+  font-size: 1em;
+  padding: 0.5em 1em;
+}
+
 .small {
   font-size: 0.7em;
 }
