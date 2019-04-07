@@ -30,7 +30,6 @@ section.banner h1, section.banner h3 {
 
   color: var(--the-white);
   text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
-  font-size: 2.7em;
   font-weight: 300;
 }
 
@@ -55,4 +54,21 @@ section.banner:before {
   bottom: 0;
   right: 0;
   border-radius: 4px;
+}
+
+@media (max-width: 1080px) {
+  section.banner {
+    height: unset;
+  }
+
+  section.banner h1 {
+    font-size: 2em;
+  }
+
+  section.banner h3 {
+    font-size: 1.2em;
+
+    padding-left: 2em;
+    padding-right: 2em;
+  }
 }

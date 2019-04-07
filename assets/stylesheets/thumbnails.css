@@ -1,6 +1,5 @@
 .thumbnails {
   display: flex;
-  flex-flow: column wrap;
 
   align-items: center;
   justify-content: center;
@@ -64,18 +63,41 @@
   margin: 0;
 }
 
-.thumbnail-image {
+.thumbnail-small {
+  width: 17em;
+  height: 17em;
+}
 
-  height: 20em;
+.thumbnail-med {
+  width: 20.625em;
+  height: 20.625em;
+}
 
-  position: relative;
-  left: -2em;
-  bottom: -0.5em;
-  width: calc(100% + 4em);
+.thumbnail-big {
+  width: 24em;
+  height: 24em;
+}
+
+.thumbnail-huge {
+  width: 36em;
+  height: 36em;
 }
 
 @media (max-width: 1080px) {
   .thumbnails {
     flex-flow: column;
+  }
+
+  .thumbnail {
+    display: block;
+  }
+
+  .thumbnail,
+  .thumbnail-small,
+  .thumbnail-med,
+  .thumbnail-big,
+  .thumbnail-huge {
+    width: 100%;
+    height: auto;
   }
 }

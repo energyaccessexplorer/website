@@ -100,6 +100,7 @@ nav #navigation-links a {
   nav:before {
     height: 3.6em;
     border: 1px solid rgba(255, 255, 255, 0.5);
+    box-sizing: border-box;
   }
 
   nav div {
@@ -136,6 +137,7 @@ nav #navigation-links a {
   }
 
   nav a#energy-access-link {
+    font-size: 5.5vw;
     display: block;
     margin: auto;
     z-index: 10;

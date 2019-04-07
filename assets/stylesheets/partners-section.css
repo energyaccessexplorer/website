@@ -42,7 +42,11 @@
 }
 
 @media (max-width: 1080px) {
-  #site-links {
-    width: 100%;
+  #partners-container .logo img {
+    max-width: 100px;
+  }
+
+  #partners-title {
+    left: calc(50% - 3em);
   }
 }

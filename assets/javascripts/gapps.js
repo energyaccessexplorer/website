@@ -8,9 +8,11 @@
     el.innerHTML = `
 This website uses <b>Google Analytics</b> and learn from its usage. Would you like to use them?
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span id="gapps-buttons">
 <button bind="opt-in" style="background-color: var(--the-green); color: var(--the-white);">Accept</button>
 &nbsp;
 <button bind="opt-out" style="background-color: var(--the-white); color: var(--the-green);">Opt Out</button>
+<span>
 `;
 
     const oin = el.querySelector('button[bind="opt-in"]');

@@ -233,4 +233,17 @@ button a {
   main {
     width: 100% !important;
   }
+
+  #gapps-ask {
+    position: fixed;
+    font-size: auto;
+    height: unset;
+    line-height: 1.8em;
+    padding: 1em 0;
+  }
+
+  #gapps-ask #gapps-buttons {
+    display: block;
+    margin: 1em;
+  }
 }
