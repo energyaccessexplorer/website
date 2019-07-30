@@ -52,14 +52,6 @@ h1, h2, h3 {
   color: var(--the-green);
 }
 
-* {
-  font-family: without-serif, sans-serif;
-}
-
-body, p {
-  color: var(--the-color);
-}
-
 a {
   text-decoration: none;
   color: var(--the-green);
@@ -87,6 +79,11 @@ body {
   margin: 0;
   font-family: without-serif, sans-serif;
   background-color: #f8f8f8;
+  color: var(--the-color);
+}
+
+dialog {
+  color: var(--the-color);
 }
 
 button {
@@ -119,9 +116,14 @@ button a {
   height: 100%;
   width: 100%;
   background-color: rgba(0,0,0, 0.6);
-  color: #f1f1f1;
   text-align: center;
   font-size: 24px;
+}
+
+.loading p {
+  color: #f1f1f1;
+  font-size: medium;
+  text-shadow: 0px 1px 5px rgba(0,0,0,0.3);
 }
 
 .spinner {
@@ -134,6 +136,7 @@ button a {
   height: 48px;
   margin: auto auto;
   margin-top: 1em;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
 }
 
 #playground {
@@ -153,8 +156,7 @@ button a {
 
 #app-loading .spinner {
   margin: 8em auto 3em;
-  border: 2px solid #333;
-  border-top: 2px solid #f1f1f1;
+  border-top: 3px solid #f1f1f1;
   width: 120px;
   height: 120px;
 }
