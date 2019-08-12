@@ -12,7 +12,7 @@ start:
 	@go run mustache-server.go -port ${WEB_PORT}
 
 stop:
-	-@lsof -t -i :${WEB_PORT} | xargs -i kill {}
+	-@lsof -t -i :${WEB_PORT} | xargs -r kill
 
 deps:
 	DEST=public/lib deps
@@ -26,6 +26,7 @@ sync:
 		--delete-before \
 		--exclude=.git \
 		--exclude=default.mk \
+		--exclude=welcome.html \
 		--exclude=makefile \
 		--exclude=maps-and-data \
 		./dist/ ${SRV_USER}@${SRV_SERVER}:${SRV_DEST}
