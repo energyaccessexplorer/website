@@ -161,6 +161,11 @@ button a {
   height: 120px;
 }
 
+#cookieNotice {
+  font-size: 1em !important;
+  font-family: without-serif !important;
+}
+
 #gapps-ask {
   position: fixed;
   bottom: 0;
