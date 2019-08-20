@@ -1,0 +1,134 @@
+<style>
+  fieldset {
+    border: none;
+  }
+
+  input {
+    padding: 7px 10px;
+    font-size: medium;
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    display: block;
+    margin: 10px;
+    width: 300px;
+  }
+
+  input:invalid {
+    border: solid 1px #f59d9d !important;
+  }
+
+  button[type="submit"] {
+    text-align: center;
+    margin: 1em;
+    background-color: var(--the-green);
+    color: white !important;
+    text-decoration: none;
+    padding: 0.9em 1.3em;
+  }
+</style>
+
+<section>
+  <form></form>
+
+  <script>
+    const fields = [{
+      n: "first_name",
+      h: "First Name",
+      t: "text",
+      r: true
+    }, {
+      n: "last_name",
+      h: "Last Name",
+      t: "text",
+      r: true
+    }, {
+      n: "email",
+      h: "Email",
+      t: "email",
+      r: true
+    }, {
+      n: "company",
+      h: "Organization",
+      t: "text",
+      r: true
+    }, {
+      n: "job_title",
+      h: "Job Title",
+      t: "text",
+      r: false
+    }, {
+      n: "areas_of_interest",
+      h: "Area of Interest",
+      t: "text",
+      o: ["Strategic Energy Planning", "Market Identification", "Investment for Impact" ],
+      r: true
+    }, {
+      n: "city",
+      h: "City",
+      t: "text",
+      r: false
+    }, {
+      n: "country",
+      h: "Country",
+      t: "text",
+      r: true
+    }];
+
+    const form = document.querySelector('form');
+
+    // const fieldset = document.createElement('fieldset');
+    for (f of fields) {
+      const i = document.createElement('input');
+      i.name = f.n;
+      i.type = f.t;
+      i.placeholder = f.h;
+
+      if (f.r) i.setAttribute('required', true);
+
+      if (f.o) {
+        i.setAttribute('list', 'datalist-' + f.n);
+        i.setAttribute('autocomplete', 'off');
+
+        const list = document.createElement('datalist');
+        list.id = 'datalist-' + f.n;
+
+        for (let o of f.o) {
+          let e = document.createElement('option');
+          e.value = o;
+          e.innerText = o;
+
+          list.append(e)
+        }
+
+        document.body.append(list);
+      }
+
+      form.append(i);
+    }
+
+    const submit = document.createElement('button');
+    submit.type = 'submit';
+    submit.innerText = "Submit";
+    submit.style = ``;
+
+    form.append(submit);
+
+    form.onsubmit = function(e) {
+      e.preventDefault();
+
+      console.log(e);
+
+      fetch('https://connect.wri.org/l/120942/2019-07-29/4dbrbl', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify()
+      })
+        .then(response => {
+          console.log(response);
+        });
+    };
+  </script>
+</section>
