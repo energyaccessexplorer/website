@@ -1,6 +1,9 @@
+<script src="/maps-and-data/lib/selectlist.js"></script>
+
 <style>
-  fieldset {
-    border: none;
+  form {
+    width: 42em;
+    margin: auto;
   }
 
   input {
@@ -25,10 +28,25 @@
     text-decoration: none;
     padding: 0.9em 1.3em;
   }
+
+  section {
+    background-color: #ffffff !important;
+  }
 </style>
 
+<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
 <section>
+  <h2>Subscribe to Energy Access Explorer Updates</h2>
+
+  <p>
+    Complete the form below to receive occasional Energy Access Explorer
+    updates, which may include information about new datasets, project updates,
+    energy access newsletters, and energy access events.
+  </p>
+
   <form></form>
+
 
   <script>
     const fields = [{
@@ -67,16 +85,15 @@
       h: "City",
       t: "text",
       r: false
-    }, {
-      n: "country",
-      h: "Country",
-      t: "text",
-      r: true
+    // }, {
+    //   n: "country",
+    //   h: "Country",
+    //   t: "text",
+    //   r: true
     }];
 
     const form = document.querySelector('form');
 
-    // const fieldset = document.createElement('fieldset');
     for (f of fields) {
       const i = document.createElement('input');
       i.name = f.n;
@@ -111,24 +128,38 @@
     submit.innerText = "Submit";
     submit.style = ``;
 
-    form.append(submit);
+    form.setAttribute('action', 'https://connect.wri.org/l/120942/2019-07-29/4dbrbl');
+    form.setAttribute('method', 'POST');
+    form.setAttribute('target', 'dummyframe');
 
-    form.onsubmit = function(e) {
-      e.preventDefault();
+    form.addEventListener('submit', function(e) {
+      for (let i of form.querySelectorAll('input,button'))
+        i.setAttribute('disabled', true);
 
-      console.log(e);
+      const p = document.createElement('p');
+      p.style = `
+padding: 1em 2em;
+background-color: #e1ecf4;
+color: #39739d;
+border-radius: 2px;
+text-align: center;`;
+      p.innerText = "Thank you for signing up. We'll keep you updated!";
+      document.querySelector('section').append(p);
+    });
 
-      fetch('https://connect.wri.org/l/120942/2019-07-29/4dbrbl', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify()
-      })
-        .then(response => {
-          console.log(response);
-        });
-    };
+    fetch('/maps-and-data/lib/countries.json')
+      .then(r => r.json())
+      .then(countries => {
+        const dict = [];
+        for (let c of countries) dict[c.cca3] = c['name']['common'];
+
+        const csl = new selectlist(`countries-select`, dict);
+        csl.el.setAttribute('name', 'country');
+        csl.el.setAttribute('placeholder', 'Country');
+        csl.el.setAttribute('required', true);
+
+        form.append(csl.el);
+        form.append(submit);
+      });
   </script>
 </section>
