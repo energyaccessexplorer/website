@@ -47,7 +47,6 @@
 
   <form></form>
 
-
   <script>
     const fields = [{
       n: "first_name",
@@ -78,7 +77,7 @@
       n: "areas_of_interest",
       h: "Area of Interest",
       t: "text",
-      o: ["Strategic Energy Planning", "Market Identification", "Investment for Impact" ],
+      o: ["Strategic Energy Planning", "Market Identification", "Investment for Impact", "Other"],
       r: true
     }, {
       n: "city",
@@ -151,12 +150,12 @@ text-align: center;`;
       .then(r => r.json())
       .then(countries => {
         const dict = [];
-        for (let c of countries) dict[c.cca3] = c['name']['common'];
+        for (let c of countries) dict[c['name']['common']] = c['name']['common'];
 
         const csl = new selectlist(`countries-select`, dict);
-        csl.el.setAttribute('name', 'country');
-        csl.el.setAttribute('placeholder', 'Country');
-        csl.el.setAttribute('required', true);
+        csl.input.setAttribute('name', 'country');
+        csl.input.setAttribute('placeholder', 'Country');
+        csl.input.setAttribute('required', true);
 
         form.append(csl.el);
         form.append(submit);

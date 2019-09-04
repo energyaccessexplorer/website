@@ -23,7 +23,6 @@
   });
 
   function add() {
-    return;
     const script = document.createElement('script');
     script.async = true;
     script.src = "https://www.googletagmanager.com/gtag/js?id=UA-67196006-4";
@@ -41,7 +40,7 @@ gtag('config', 'UA-67196006-4');
   };
 
   let c = document.cookie.match(/cookie_notice=(\d)/);
-  if (!c) document.querySelector('span[data-test-action="dismiss-cookie-notice"]').onclick = add;
+  if (!c) document.querySelector('span[data-test-action="dismiss-cookie-notice"]').addEventListener('click', e => add());
   else if (c[1] === "1") add();
 
   const el = document.querySelector('#cookieNotice');

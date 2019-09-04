@@ -20,6 +20,10 @@ section figure {
   max-width: 42em;
 }
 
+section h2 {
+  max-width: 30em;
+}
+
 section figure {
   margin: auto;
 }
