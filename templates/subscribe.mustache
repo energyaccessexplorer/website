@@ -1,4 +1,4 @@
-<script src="/maps-and-data/lib/selectlist.js"></script>
+<script src="/tool/lib/selectlist.js"></script>
 
 <style>
   form {
@@ -146,7 +146,7 @@ text-align: center;`;
       document.querySelector('section').append(p);
     });
 
-    fetch('/maps-and-data/lib/countries.json')
+    fetch('/tool/lib/countries.json')
       .then(r => r.json())
       .then(countries => {
         const dict = [];

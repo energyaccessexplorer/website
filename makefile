@@ -28,7 +28,7 @@ sync:
 		--exclude=default.mk \
 		--exclude=welcome.html \
 		--exclude=makefile \
-		--exclude=maps-and-data \
+		--exclude=tool \
 		./dist/ ${SRV_USER}@${SRV_SERVER}:${SRV_DEST}
 
 deploy: build sync
