@@ -1,0 +1,43 @@
+<script src="/lib/login.js"></script>
+<script src="/lib/flash.js"></script>
+
+<style>
+  form {
+    width: 24em;
+    margin: auto;
+    text-align: center;
+    padding: 5em;
+  }
+
+  form input {
+    text-align: center;
+    margin: 0.5em 0;
+    font-size: 1.2em !important;
+    padding: 0.5em;
+    width: 100%;
+  }
+
+  form button {
+    font-size: 1.2em;
+    padding: 0.9em 1.3em;
+    color: var(--the-white);
+    background-color: var(--the-green);
+  }
+
+  @media (max-width: 1080px) {
+    form {
+      width: auto;
+      padding: 2em 0;
+    }
+
+    form input {
+      width: auto;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', _ => {
+    login_setup(auth_server, "ea", document.querySelector('body > main'));
+  });
+</script>
