@@ -12,7 +12,7 @@ start:
 	@go run mustache-server.go -port ${WEB_PORT}
 
 stop:
-	-@lsof -t -i :${WEB_PORT} | xargs -r kill
+	-@stop-port ${WEB_PORT}
 
 deps:
 	DEST=public/lib deps

@@ -26,7 +26,7 @@ while read path; do
     mkdir -p dist$path
 
     curl --silent --fail -o dist$path/index.html $address$path || \
-        (echo "   Failed to get $path" && rm -R dist$path)
+        (echo "   Failed to get $address/$path" && rm -R dist$path)
 
 done <routes.tsv
 
