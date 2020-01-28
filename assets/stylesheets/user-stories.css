@@ -22,16 +22,21 @@ section h4 {
    margin-top: 1em;
 }
 
-section.banner {
-  width: 100%;
-}
-
 section#video {
   padding: 0;
   margin: 0;
   min-width: 100%;
   background-color: black;
   height: 360px;
+  text-align: center;
+}
+
+section#announce {
+  min-width: calc(100% - 8em);
+}
+
+section#announce p {
+  font-size: 1.2em;
 }
 
 section:nth-of-type(4n),
