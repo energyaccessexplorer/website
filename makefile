@@ -1,24 +1,25 @@
-# WEB_PORT = 8000
+# WEBSITE_PORT = 8000
 #
 # SRV_USER = username
 # SRV_SERVER = example.org
-# SRV_DEST = /srv/http/example
+# WEBSITE_DEST = /srv/http/example
 #
 # or ...
 #
-include default.mk
+include ../default.mk
 
 start:
-	@go run mustache-server.go -port ${WEB_PORT}
+	@go build
+	@ ./website -port ${WEBSITE_PORT}
 
 stop:
-	-@stop-port ${WEB_PORT}
+	-@stop-port ${WEBSITE_PORT}
 
 deps:
 	DEST=public/lib deps
 
 build:
-	@ ./build "localhost:${WEB_PORT}"
+	@ ./build "localhost:${WEBSITE_PORT}"
 
 sync:
 	@rsync -OPrv \
@@ -29,7 +30,7 @@ sync:
 		--exclude=welcome.html \
 		--exclude=makefile \
 		--exclude=tool \
-		./dist/ ${SRV_USER}@${SRV_SERVER}:${SRV_DEST}
+		./dist/ ${SRV_USER}@${SRV_SERVER}:${WEBSITE_DEST}
 
 deploy: build sync
 
