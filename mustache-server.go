@@ -1,32 +1,35 @@
 package main
 
 import (
+	"flag"
+	"github.com/hoisie/mustache"
+	"github.com/hoisie/web"
 	"os"
 	"strings"
-	"flag"
-	"github.com/hoisie/web"
-	"github.com/hoisie/mustache"
 )
 
-var port string
-var ip string
+var (
+	port string
+	ip   string
+)
 
-var layout = "templates/layout.mustache"
+func all(ctx *web.Context, v string) string {
+	if v == "" {
+		v = "index"
+	}
+	templt := "templates/" + v + ".mustache"
+	_, err := os.Stat(templt)
 
-func all(ctx *web.Context, val string) string {
-	if val == "" { val = "index" }
-	var templt = "templates/" + val +  ".mustache"
-
-	if _, err := os.Stat(templt); err != nil {
-		ctx.NotFound("NO")
+	if err != nil {
+		ctx.NotFound(err.Error())
 		return ""
 	}
 
-	return mustache.RenderFileInLayout(templt, layout, nil)
+	return mustache.RenderFileInLayout(templt, "templates/layout.mustache", nil)
 }
 
 func main() {
-	flag.StringVar(&ip,  "ip", "0.0.0.0", "IP address to liten on.")
+	flag.StringVar(&ip, "ip", "0.0.0.0", "IP address to listen on.")
 	flag.StringVar(&port, "port", "9876", "Port to run on.")
 	flag.Parse()
 
