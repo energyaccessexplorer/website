@@ -11,14 +11,14 @@
 build: mustache
 	@./build
 
-start: build
+start: build deps
 	httpserver -dir dist
 
 mustache:
 	go build -o mustache mustache.go
 
 deps:
-	DEST=public/lib deps
+	DEST=dist/lib ./deps
 
 sync:
 	rsync -OPrv \
@@ -33,4 +33,4 @@ sync:
 
 deploy: build sync
 
-.PHONY: build
+.PHONY: build deps
