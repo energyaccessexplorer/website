@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #
 # Read ./routes.tsv and create an a tree of static HTML mocking the
 # ./templates directory.
@@ -6,10 +6,13 @@
 # Then sync the ./assets directory containing the static assets
 # (images, stylesheets etc...)
 
-address=$1
-
 if [ ! -f routes.tsv ]; then
     echo "No 'routes.tsv' file"
+    exit 1
+fi
+
+if [ ! -f mustache ]; then
+    echo "No 'mustache' executable"
     exit 1
 fi
 
@@ -20,13 +23,14 @@ else
     mkdir -p dist
 fi
 
-while read path; do
-    echo "-> $path"
+while read route; do
+    echo "-> $route"
 
-    mkdir -p dist$path
+	dest=dist$route
 
-    curl --silent --fail -o dist$path/index.html $address$path || \
-        (echo "   Failed to get $address/$path" && rm -R dist$path)
+    mkdir -p $dest
+    ./mustache $route > $dest/index.html || \
+        (echo "   Failed to generate $path" && rm -R $dest)
 
 done <routes.tsv
 

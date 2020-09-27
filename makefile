@@ -8,15 +8,14 @@
 #
 .include <env.mk>
 
-build:
-	@ ./build "localhost:${WEBSITE_PORT}"
+build: mustache
+	@./build
 
-start:
-	@go build
-	@ ./website -port ${WEBSITE_PORT}
+start: build
+	httpserver -dir dist
 
-stop:
-	-@stop-port ${WEBSITE_PORT}
+mustache:
+	go build -o mustache mustache.go
 
 deps:
 	DEST=public/lib deps
