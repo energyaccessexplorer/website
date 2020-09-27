@@ -24,12 +24,8 @@ sync:
 	rsync -OPrv \
 		--checksum \
 		--delete-before \
-		--exclude=.git \
-		--exclude=default.mk \
-		--exclude=welcome.html \
-		--exclude=makefile \
-		--exclude=tool \
-		./dist/ ${WEBSITE_SRV_USER}@${WEBSITE_SRV_SERVER}:${WEBSITE_DEST}
+		./dist/ \
+		${WEBSITE_SRV_USER}@${WEBSITE_SRV_SERVER}:${WEBSITE_DEST}
 
 deploy: build sync
 
