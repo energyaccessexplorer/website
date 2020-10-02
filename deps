@@ -4,6 +4,11 @@
 # second column into the first column. A poor man's package manager if
 # you will...
 
+function printline {
+	echo -en "\e[1A"
+	echo -e "\e[0K\r$1"
+}
+
 if [ ! -f dependencies.tsv ]; then
 	echo "No 'dependencies.tsv' file"
 	exit 1
@@ -26,7 +31,7 @@ do
 EOF
 
 	if [ -f "$DEST/$target" ]; then
-		echo "$target exists. Skip."
+		printline "$target exists. Skip."
 
 	elif [ -z "$origin" ]; then
 		echo "Could not parse line: '$line'. Skip."
@@ -35,7 +40,9 @@ EOF
 	else
 		install -D /dev/null $DEST/$target
 
-		(curl -L "$origin" --silent --fail -o "$DEST/$target" && echo "Fetched $target" ) || \
+		(curl -L "$origin" --silent --fail -o "$DEST/$target" && printline "Fetched $target" ) || \
 			echo "FAILED to fetch $target!"
 	fi
 done <dependencies.tsv
+
+printline "deps done!"
