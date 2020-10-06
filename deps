@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This script reads ./dependencies.tsv and fetches the entries in the
 # second column into the first column. A poor man's package manager if
