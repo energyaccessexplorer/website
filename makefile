@@ -9,6 +9,7 @@
 .include <env.mk>
 
 build: mustache
+	@printf "%s" ${WEBSITE_S3BUCKET} > templates/s3bucket.mustache
 	@./build
 
 start: build deps
