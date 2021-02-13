@@ -2,11 +2,14 @@
 <script src="/lib/flash.js"></script>
 
 <style>
+  body {
+    box-sizing: content-box;
+  }
+
   form {
     width: 24em;
-    margin: auto;
+    margin: 5em auto;
     text-align: center;
-    padding: 5em;
   }
 
   form input {
@@ -18,26 +21,25 @@
   }
 
   form button {
-    font-size: 1.2em;
-    padding: 0.9em 1.3em;
+    font-size: 1.2em !important;
+    padding: 0.5em 1.3em;
     color: var(--the-white);
     background-color: var(--the-green);
-  }
-
-  @media (max-width: 1080px) {
-    form {
-      width: auto;
-      padding: 2em 0;
-    }
-
-    form input {
-      width: auto;
-    }
+    margin: 0.7em auto;
   }
 </style>
 
-<script>
+<script type="module">
+  const flashy = new flash();
+
   document.addEventListener('DOMContentLoaded', _ => {
-    login_setup(auth_server, "ea", document.querySelector('body > main'));
+	document.querySelector('body > main').append(
+	  login_setup({
+		"server": atob("aHR0cHM6Ly9hdXRoLmNoZXN0bnV0LnZpc2lvbg=="),
+		"world": "ea",
+		"submit_text": "Login",
+		"success": _ => window.location = "/tool/s/",
+		"error": m => flashy.push(m)
+	  }));
   });
 </script>
