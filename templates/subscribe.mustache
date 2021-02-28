@@ -20,6 +20,14 @@
     border: solid 1px #f59d9d !important;
   }
 
+  p.status {
+	padding: 1em 2em;
+	background-color: #e1ecf4;
+	color: #39739d;
+	border-radius: 2px;
+	text-align: center;
+  }
+
   button[type="submit"] {
     text-align: center;
     margin: 1em;
@@ -27,6 +35,10 @@
     color: white !important;
     text-decoration: none;
     padding: 0.9em 1.3em;
+  }
+
+  button[type="submit"]:disabled {
+	opacity: 0.3;
   }
 
   section {
@@ -47,118 +59,5 @@
 
   <form></form>
 
-  <script>
-    const fields = [{
-      n: "first_name",
-      h: "First Name",
-      t: "text",
-      r: true
-    }, {
-      n: "last_name",
-      h: "Last Name",
-      t: "text",
-      r: true
-    }, {
-      n: "email",
-      h: "Email",
-      t: "email",
-      r: true
-    }, {
-      n: "company",
-      h: "Organization",
-      t: "text",
-      r: true
-    }, {
-      n: "job_title",
-      h: "Job Title",
-      t: "text",
-      r: false
-    }, {
-      n: "areas_of_interest",
-      h: "Area of Interest",
-      t: "text",
-      o: ["Strategic Energy Planning", "Market Identification", "Investment for Impact", "Other"],
-      r: true
-    }, {
-      n: "city",
-      h: "City",
-      t: "text",
-      r: false
-    // }, {
-    //   n: "country",
-    //   h: "Country",
-    //   t: "text",
-    //   r: true
-    }];
-
-    const form = document.querySelector('form');
-
-    for (f of fields) {
-      const i = document.createElement('input');
-      i.name = f.n;
-      i.type = f.t;
-      i.placeholder = f.h;
-
-      if (f.r) i.setAttribute('required', true);
-
-      if (f.o) {
-        i.setAttribute('list', 'datalist-' + f.n);
-        i.setAttribute('autocomplete', 'off');
-
-        const list = document.createElement('datalist');
-        list.id = 'datalist-' + f.n;
-
-        for (let o of f.o) {
-          let e = document.createElement('option');
-          e.value = o;
-          e.innerText = o;
-
-          list.append(e)
-        }
-
-        document.body.append(list);
-      }
-
-      form.append(i);
-    }
-
-    const submit = document.createElement('button');
-    submit.type = 'submit';
-    submit.innerText = "Submit";
-    submit.style = ``;
-
-    form.setAttribute('action', 'https://connect.wri.org/l/120942/2019-07-29/4dbrbl');
-    form.setAttribute('method', 'POST');
-    form.setAttribute('target', 'dummyframe');
-
-    form.addEventListener('submit', function(e) {
-      for (let i of form.querySelectorAll('input,button'))
-        i.setAttribute('disabled', true);
-
-      const p = document.createElement('p');
-      p.style = `
-padding: 1em 2em;
-background-color: #e1ecf4;
-color: #39739d;
-border-radius: 2px;
-text-align: center;`;
-      p.innerText = "Thank you for signing up. We'll keep you updated!";
-      document.querySelector('section').append(p);
-    });
-
-    fetch('/tool/lib/countries.json')
-      .then(r => r.json())
-      .then(countries => {
-        const dict = [];
-        for (let c of countries) dict[c['name']['common']] = c['name']['common'];
-
-        const csl = new selectlist(`countries-select`, dict);
-        csl.input.setAttribute('name', 'country');
-        csl.input.setAttribute('placeholder', 'Country');
-        csl.input.setAttribute('required', true);
-
-        form.append(csl.el);
-        form.append(submit);
-      });
-  </script>
+  <script src="/javascripts/subscribe.js"></script>
 </section>
