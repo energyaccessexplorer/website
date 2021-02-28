@@ -1,5 +1,5 @@
-(function() {
-	const mailing = "aHR0cHM6Ly9tYWlsaW5nLmNoZXN0bnV0LnZpc2lvbg==";
+(async function() {
+	const mailing = "aHR0cHM6Ly9ib3VuY2VyLmNoZXN0bnV0LnZpc2lvbg==";
 	const world = "https://world.energyaccessexplorer.org";
 
 	const fields = [{
@@ -45,6 +45,26 @@
 		//   r: true
 	}];
 
+	const data = {
+		list_id: '2defa3ad-5193-48ae-b186-dd1446cdca5b',
+		settings: {},
+		jsondata: {},
+	};
+
+	const token = await fetch(atob(mailing) + '/token')
+		.then(r => {
+			if (!r.ok) {
+				const p = document.querySelector("main p");
+				p.innerText = "Something went wrong with our setup. Could you come back later, please?";
+
+				throw "Failed to get token."
+			}
+
+			return r;
+		})
+		.then(r => r.text())
+		.then(x => data['cfs'] = x);
+
 	const form = document.querySelector('form');
 
 	for (const f of fields) {
@@ -75,16 +95,6 @@
 
 		form.append(i);
 	}
-
-	const data = {
-		list_id: '2defa3ad-5193-48ae-b186-dd1446cdca5b',
-		settings: {},
-		jsondata: {},
-	};
-
-	fetch(atob(mailing) + '/token')
-		.then(r => r.text())
-		.then(x => data['cfs'] = x);
 
 	fetch(world + '/countries?select=name')
 		.then(r => r.json())
@@ -127,7 +137,7 @@
 			data[g][f.n] = form.querySelector(`input[name=${f.n}]`).value;
 		}
 
-		fetch(mailing + '/signup', {
+		fetch(atob(mailing) + '/signup', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8;'
