@@ -6,7 +6,9 @@
     margin: auto;
   }
 
+  select,
   input {
+	background-color: transparent;
     padding: 7px 10px;
     font-size: medium;
     border: 1px solid lightgray;
@@ -14,8 +16,10 @@
     display: block;
     margin: 10px;
     width: 300px;
+	box-sizing: border-box;
   }
 
+  select:invalid,
   input:invalid {
     border: solid 1px #f59d9d !important;
   }

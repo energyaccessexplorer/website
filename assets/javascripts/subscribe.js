@@ -96,6 +96,32 @@
 		form.append(i);
 	}
 
+	const typeselect = document.createElement('select');
+	typeselect.setAttribute('name', 'subscribe-type');
+
+	const typeoptions = {
+		"": "Select a registration type",
+		"mailing": "Mailing list",
+		"account": "User account",
+		"both": "User account and Mailing list",
+	};
+
+	const os = Object.keys(typeoptions).map(k => {
+		const o = document.createElement('option')
+		o.innerText = typeoptions[k];
+		o.setAttribute('value', k);
+
+		return o;
+	});
+
+	os[0].setAttribute('disabled', '');
+	os[0].setAttribute('selected', '');
+
+	typeselect.append(...os);
+	typeselect.setAttribute('required', '');
+
+	form.prepend(typeselect);
+
 	fetch(world + '/countries?select=name')
 		.then(r => r.json())
 		.then(countries => {
@@ -123,7 +149,7 @@
 	form.onsubmit = function(e) {
 		e.preventDefault();
 
-		for (const i of form.querySelectorAll('input,button'))
+		for (const i of form.querySelectorAll('input,button,select'))
 			i.setAttribute('disabled', '');
 
 		data['email'] = form.querySelector(`input[name=email]`).value;
@@ -136,6 +162,9 @@
 
 			data[g][f.n] = form.querySelector(`input[name=${f.n}]`).value;
 		}
+
+		data['jsondata']['account'] = ['both', 'account'].includes(typeselect.value);
+		data['jsondata']['mailing'] = ['both', 'mailing'].includes(typeselect.value);
 
 		fetch(atob(mailing) + '/signup', {
 			method: 'POST',
