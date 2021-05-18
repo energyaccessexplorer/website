@@ -13,7 +13,7 @@ build: mustache
 	@./build
 
 start: build deps
-	httpserver --port ${WEBSITE_PORT} -dir dist
+	httpserver --port ${WEBSITE_PORT} --dir dist
 
 mustache:
 	go build -o mustache mustache.go

@@ -52,7 +52,7 @@
 <script>
   (function() {
     const links = document.querySelectorAll('nav #navigation-links a');
-	if (!links) return;
+    if (!links) return;
 
     for (var l of links) {
       if (location.pathname.match(new RegExp(l.getAttribute('href').split('/')[1])))

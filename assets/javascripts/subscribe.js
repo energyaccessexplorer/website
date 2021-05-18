@@ -65,7 +65,7 @@
 		.then(r => r.text())
 		.then(x => data['cfs'] = x);
 
-	const form = document.querySelector('form');
+	const form = document.createElement('form');
 
 	for (const f of fields) {
 		const i = document.createElement('input');
@@ -180,4 +180,6 @@
 				document.querySelector('section').append(p);
 			});
 	};
+
+	document.querySelector('main section').append(form);
 })();

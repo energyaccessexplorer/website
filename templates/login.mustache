@@ -33,13 +33,13 @@
   const flashy = new flash();
 
   document.addEventListener('DOMContentLoaded', _ => {
-	document.querySelector('body > main').append(
-	  login_setup({
-		"server": atob("aHR0cHM6Ly9hdXRoLmNoZXN0bnV0LnZpc2lvbg=="),
-		"world": "ea",
-		"submit_text": "Login",
-		"success": _ => window.location = "/tool/s/",
-		"error": m => flashy.push(m)
-	  }));
+    document.querySelector('body > main').append(
+      login_setup({
+        "server": atob("aHR0cHM6Ly9hdXRoLmNoZXN0bnV0LnZpc2lvbg=="),
+        "world": "ea",
+        "submit_text": "Login",
+        "success": _ => window.location = "/tool/s/",
+        "error": m => flashy.push(m)
+      }));
   });
 </script>
