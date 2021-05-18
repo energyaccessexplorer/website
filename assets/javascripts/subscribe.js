@@ -51,12 +51,20 @@
 		jsondata: {},
 	};
 
+	function tokenfail() {
+		const m = document.querySelector("main section");
+		const p = document.createElement("p");
+		p.className = "error";
+
+		p.innerText = "Something went wrong with our setup. Could you come back later, please?";
+		m.append(p);
+	};
+
 	const token = await fetch(atob(mailing) + '/token')
+		.catch(e => tokenfail)
 		.then(r => {
 			if (!r.ok) {
-				const p = document.querySelector("main p");
-				p.innerText = "Something went wrong with our setup. Could you come back later, please?";
-
+				tokenfail();
 				throw "Failed to get token."
 			}
 
