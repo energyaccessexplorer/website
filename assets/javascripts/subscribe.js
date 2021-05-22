@@ -1,6 +1,7 @@
 (async function() {
 	const mailing = "aHR0cHM6Ly9ib3VuY2VyLmNoZXN0bnV0LnZpc2lvbg==";
 	const world = "https://world.energyaccessexplorer.org";
+	const url = new URL(location);
 
 	const fields = [{
 		n: "first_name",
@@ -127,6 +128,9 @@
 
 	typeselect.append(...os);
 	typeselect.setAttribute('required', '');
+
+	const sel = url.searchParams.get('select');
+	if (typeoptions[sel]) typeselect.value = sel;
 
 	form.prepend(typeselect);
 
