@@ -19,7 +19,7 @@
 		t: "email",
 		r: true
 	}, {
-		n: "company",
+		n: "organization",
 		h: "Organization",
 		t: "text",
 		r: true
@@ -29,8 +29,8 @@
 		t: "text",
 		r: false
 	}, {
-		n: "area_of_interest",
-		h: "Area of Interest",
+		n: "areas_of_interest",
+		h: "Areas of Interest",
 		t: "text",
 		o: ["Strategic Energy Planning", "Market Identification", "Investment for Impact", "Other"],
 		r: true
@@ -39,11 +39,6 @@
 		h: "City",
 		t: "text",
 		r: false
-		// }, {
-		//   n: "country",
-		//   h: "Country",
-		//   t: "text",
-		//   r: true
 	}];
 
 	const data = {
@@ -167,13 +162,15 @@
 		data['email'] = form.querySelector(`input[name=email]`).value;
 
 		for (const f of fields) {
-			let g = 'jsondata'
+			const v = form.querySelector(`input[name=${f.n}]`).value;
 
-			if (f.n === 'email') continue;
-			else if (f.n === 'area_of_interest') g = 'settings';
+			data['jsondata'][f.n] = v;
 
-			data[g][f.n] = form.querySelector(`input[name=${f.n}]`).value;
+			if (f.n === 'areas_of_interest')
+				data['settings'][f.n] = v;
 		}
+
+		data['jsondata']['country'] = form.querySelector(`input[name=country]`).value;
 
 		data['jsondata']['account'] = ['both', 'account'].includes(typeselect.value);
 		data['jsondata']['mailing'] = ['both', 'mailing'].includes(typeselect.value);
