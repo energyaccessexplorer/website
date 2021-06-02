@@ -8,6 +8,10 @@
 #
 .include <env.mk>
 
+.ifndef WEBSITE_DEST
+.error "WEBSITE_DEST command is not defined. Hej då."
+.endif
+
 build: mustache
 	@printf "%s" ${WEBSITE_S3BUCKET} > templates/s3bucket.mustache
 	@./build
@@ -24,6 +28,7 @@ deps:
 sync:
 	rsync -OPrv \
 		--checksum \
+		--copy-links \
 		--delete-before \
 		./dist/ \
 		${WEBSITE_SSH_USER}@${WEBSITE_HOST}:${WEBSITE_DEST}
