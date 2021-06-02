@@ -32,7 +32,7 @@
 		n: "areas_of_interest",
 		h: "Areas of Interest",
 		t: "text",
-		o: ["Strategic Energy Planning", "Market Identification", "Investment for Impact", "Other"],
+		o: ["Strategic Energy Planning", "Market Intelligence", "Investment for Impact", "Other"],
 		r: true
 	}, {
 		n: "city",
