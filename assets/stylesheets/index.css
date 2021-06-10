@@ -15,6 +15,10 @@ section#blogs-publications .thumbnails {
   height: 700px;
 }
 
+section#video {
+  text-align: center;
+}  
+  
 @media (max-width: 1080px) {
   section {
     height: unset !important;
