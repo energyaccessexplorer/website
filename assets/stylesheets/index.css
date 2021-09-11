@@ -11,8 +11,9 @@ section#user-stories .thumbnails {
 }
 
 section#blogs-publications .thumbnails {
-  flex-flow: column wrap;
-  height: 700px;
+  /* flex-flow: column wrap; */
+  /* height: 700px; */
+  flex-flow: row wrap;
 }
 
 section#video iframe {
