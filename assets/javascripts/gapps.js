@@ -43,10 +43,13 @@ gtag('config', 'UA-67196006-4');
     document.head.appendChild(script);
   };
 
-  let c = document.cookie.match(/cookie_notice=(\d)/);
-  if (!c) document.querySelector('span[data-test-action="dismiss-cookie-notice"]').addEventListener('click', e => add());
-  else if (c[1] === "1") add();
-
-  const el = document.querySelector('#cookieNotice');
-  setTimeout(_ => el ? el.remove() : null, 60*1000);
+  // let c = document.cookie.match(/cookie_notice=(\d)/);
+  // if (!c) document.querySelector('span[data-test-action="dismiss-cookie-notice"]').addEventListener('click', e => add());
+  // else if (c[1] === "1") add();
+  //
+  // const el = document.querySelector('#cookieNotice');
+  // setTimeout(_ => el ? el.remove() : null, 60*1000);
+  //
+  //
+  add();
 })();
