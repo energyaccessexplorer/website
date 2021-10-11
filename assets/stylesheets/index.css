@@ -22,6 +22,10 @@ section#video iframe {
 }
 
 @media (max-width: 1080px) {
+  section#video iframe {
+	width: 100%;
+  }
+
   section {
     height: unset !important;
   }
