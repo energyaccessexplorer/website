@@ -1,12 +1,4 @@
-# WEBSITE_PORT = 8000
-#
-# WEBSITE_SSH_USER = username
-# WEBSITE_SSH_SERVER = example.org
-# WEBSITE_DEST = /srv/http/example
-#
-# or ...
-#
-.include <env.mk>
+.include .env
 
 BIN = ./bin
 DIST = ./dist
@@ -20,7 +12,7 @@ build: mustache
 	${BIN}/build
 
 start: build deps
-	httpserver --port ${WEBSITE_PORT} --dir ${DIST}
+	${HTTP_SERVER} --port ${WEBSITE_PORT} --dir ${DIST}
 
 mustache:
 	go build -o mustache mustache.go
