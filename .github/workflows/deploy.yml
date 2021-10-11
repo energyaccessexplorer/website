@@ -31,8 +31,8 @@ jobs:
         run: |
           go get -v -d
           go build -v -o mustache mustache.go
-          ./build
-          DEST=dist/lib ./deps
+          ./bin/build
+          DEST=dist/lib ./bin/deps
 
       # Runs a single command using the runners shell
       - uses: burnett01/rsync-deployments@4.1
