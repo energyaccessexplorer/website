@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # This script reads ./dependencies.tsv and fetches the entries in the
 # second column into the first column. A poor man's package manager if
@@ -10,17 +10,17 @@ function printline {
 }
 
 if [ ! -f dependencies.tsv ]; then
-	echo "No 'dependencies.tsv' file"
+	>&2 echo "No 'dependencies.tsv' file"
 	exit 1
 fi
 
 if [ -z $DEST ]; then
-	echo "DEST is not defined."
+	>&2 echo "DEST is not defined."
 	exit 1
 fi
 
 if [ ! -d $DEST ]; then
-	echo "Creating $DEST..."
+	printf "%s\n\n" "Creating $DEST..."
 	mkdir -p $DEST
 fi
 
@@ -29,20 +29,23 @@ do
 	IFS=' ' read target origin <<EOF
 `echo $line`
 EOF
+	printline "Fetching $origin"
+
+	if [ -z "$origin" ]; then
+		>&2 echo "Could not parse line: '$line'. Skip."
+		exit 1
+	fi
 
 	if [ -f "$DEST/$target" ]; then
 		printline "$target exists. Skip."
+		continue
+	fi
 
-	elif [ -z "$origin" ]; then
-		echo "Could not parse line: '$line'. Skip."
-		exit 1
-
+	if curl -L "$origin" --silent --fail --output "$DEST/$target"; then
+		printline "$target"
 	else
-		install -D /dev/null $DEST/$target
-
-		(curl -L "$origin" --silent --fail -o "$DEST/$target" && printline "Fetched $target" ) || \
-			echo "FAILED to fetch $target!"
+		printf "%s\n\n" "FAILED to fetch $target!"
 	fi
 done <dependencies.tsv
 
-printline "deps done!"
+printline "deps finished"
