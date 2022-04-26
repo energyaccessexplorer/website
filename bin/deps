@@ -4,7 +4,7 @@
 # second column into the first column. A poor man's package manager if
 # you will...
 
-function printline {
+printline() {
 	echo -en "\e[1A"
 	echo -e "\e[0K\r$1"
 }
