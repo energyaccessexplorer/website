@@ -1,5 +1,6 @@
 h2 {
   font-size: 2em;
+  flex-basis: 100%;
 }
 
 section.banner {
@@ -16,8 +17,14 @@ section#blogs-publications .thumbnails {
   flex-flow: row wrap;
 }
 
+section#video {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
 section#video iframe {
-  margin: 2em auto;
+  margin: 2em 1em;
   display: block;
 }
 
