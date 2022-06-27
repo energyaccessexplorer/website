@@ -17,7 +17,7 @@ section#blogs-publications .thumbnails {
   flex-flow: row wrap;
 }
 
-section#video {
+section#video .thumbnails {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
