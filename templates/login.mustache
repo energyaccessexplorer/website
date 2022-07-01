@@ -2,13 +2,19 @@
 <script src="/lib/flash.js"></script>
 
 <style>
-  body {
-    box-sizing: content-box;
+  html {
+    box-sizing: border-box;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
   }
 
   form {
     width: 24em;
-    margin: 5em auto;
+    margin: auto;
+    padding-top: 5em;
+    padding-bottom: 5em;
     text-align: center;
   }
 
