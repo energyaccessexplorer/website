@@ -18,6 +18,7 @@ mustache:
 	go build -o mustache mustache.go
 
 deps:
+	mkdir -p assets/lib/fonts
 	DEST=assets/lib ${BIN}/deps
 
 sync:

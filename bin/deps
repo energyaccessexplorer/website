@@ -41,7 +41,7 @@ EOF
 		continue
 	fi
 
-	if curl -L "$origin" --silent --fail --output "$DEST/$target"; then
+	if curl --location --silent --fail --output "$DEST/$target" "$origin"; then
 		printline "$target"
 	else
 		printf "%s\n\n" "FAILED to fetch $target!"

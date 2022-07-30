@@ -7,34 +7,34 @@
 # (images, stylesheets etc...)
 
 if [ ! -f routes.tsv ]; then
-    echo "No 'routes.tsv' file"
-    exit 1
+	echo "No 'routes.tsv' file"
+	exit 1
 fi
 
 if [ ! -f mustache ]; then
-    echo "No 'mustache' executable"
-    exit 1
+	echo "No 'mustache' executable"
+	exit 1
 fi
 
 if [ -d dist ]; then
-    echo "Emptying 'dist'"
-    rm -Rf dist/*
+	echo "Emptying 'dist'"
+	rm -Rf dist/*
 else
-    mkdir -p dist
+	mkdir -p dist
 fi
 
 while read route; do
-    echo "-> $route"
+	echo "-> $route"
 
 	dest=dist$route
 
-    mkdir -p $dest
-    ./mustache $route > $dest/index.html || \
-        (echo "   Failed to generate $path" && rm -R $dest)
+	mkdir -p $dest
+	./mustache $route > $dest/index.html || \
+		(echo "   Failed to generate $path" && rm -R $dest)
 
 done <routes.tsv
 
 if [ -d assets ]; then
-    echo "Syncing 'assets/ -> dist'"
-    rsync -r --copy-links assets/ dist
+	echo "Syncing 'assets/ -> dist'"
+	rsync -r --copy-links assets/ dist
 fi
