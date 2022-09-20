@@ -4,9 +4,15 @@
 # second column into the first column. A poor man's package manager if
 # you will...
 
-printline() {
-	echo -en "\e[1A"
-	echo -e "\e[0K\r$1"
+echo $TTY
+
+function printline {
+	if [ -t 1 ]; then
+		echo -en "\e[1A"
+		echo -e "\e[0K\r$1"
+	else
+		echo "$1"
+	fi
 }
 
 if [ ! -f dependencies.tsv ]; then
