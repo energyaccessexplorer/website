@@ -16,7 +16,7 @@ is given. If you Go installed simply go to the next section.
 ## Building & Hacking
 
 Once you have the requirements installed, edit the variables in the `.env` file
-and run: (`bmake` for Linux)
+and run: (`bmake` in Linux)
 
 	$ make build start
 
