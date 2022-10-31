@@ -7,14 +7,15 @@ DIST = ./dist
 .error "WEBSITE_DEST command is not defined. Hej då."
 .endif
 
-build: mustache
+build: deps mustache
 	@printf "%s" ${WEBSITE_S3BUCKET} > templates/s3bucket.mustache
 	${BIN}/build
 
-start: build deps
+start:
 	${HTTP_SERVER} --port ${WEBSITE_PORT} --dir ${DIST}
 
 mustache:
+	go get
 	go build -o mustache mustache.go
 
 deps:

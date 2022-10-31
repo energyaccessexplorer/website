@@ -36,5 +36,7 @@ done <routes.tsv
 
 if [ -d assets ]; then
 	echo "Syncing 'assets/ -> dist'"
-	rsync -r --copy-links assets/ dist
+	rsync --recursive \
+		  --copy-links \
+		  assets/ dist
 fi
