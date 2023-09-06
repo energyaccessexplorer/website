@@ -1,5 +1,4 @@
 <script src="/lib/login.js"></script>
-<script src="/lib/flash.js"></script>
 
 <style>
   html {
@@ -36,6 +35,8 @@
 </style>
 
 <script type="module">
+  import flash from "/lib/flash.js";
+
   const flashy = new flash();
 
   document.addEventListener('DOMContentLoaded', _ => {
