@@ -8,20 +8,13 @@ main {
 section {
   padding: 2em 4em;
   margin: auto;
-}
-
-section * {
-  max-width: 1080px;
+  max-width: 72em;
 }
 
 section p,
 section ul,
 section figure {
   max-width: 42em;
-}
-
-section h2 {
-  max-width: 30em;
 }
 
 section figure {
@@ -33,12 +26,20 @@ section > div {
 }
 
 section h2 {
-  margin: auto;
+  margin: auto 0;
   margin-top: 1em;
 }
 
-section:nth-of-type(odd) {
-  background-color: var(--the-blueish-white);
+section.two-cols {
+  display: flex;
+  justify-content: space-between;
+}
+
+section.two-cols h2 {
+  flex: 1 1 0;
+  white-space: nowrap;
+  margin: unset;
+  max-width: calc(50% - 6em);
 }
 
 @media (max-width: 1080px) {

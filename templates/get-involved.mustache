@@ -1,9 +1,25 @@
-<link href="/stylesheets/thumbnails.css" rel="stylesheet" />
-
 <style>
-  .thumbnail { background-color: var(--the-green); }
-  .thumbnail:before { background: unset; }
-  .thumbnail h3 { color: var(--the-yellow) !important; }
+  section {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+  }
+
+  section > div{
+    margin: 2em;
+  }
+
+  button {
+    background-color: var(--the-green);
+  }
+
+  button a {
+    color: white !important;
+  }
+
+  h3 {
+    padding: 0;
+  }
 </style>
 
 <section class="banner"
@@ -14,53 +30,53 @@
 </section>
 
 <section>
-  <div class="thumbnails" style="flex-flow: row wrap;">
-    <div class="thumbnail thumbnail-big pop-hover">
-      <h3>Contribute&nbsp;Data</h3>
+  <div>
+    <h3>Contribute Data</h3>
 
-      <p>
-        Have newer or more comprehensive data? Extend the reach and
-        impact of your data sets by contributing to Energy Access
-        Explorer.
-      </p>
+    <p>
+      Have newer or more comprehensive data? Extend the reach and
+      impact of your data sets by contributing to Energy Access
+      Explorer.
+    </p>
 
-      <p>
-        Contact us at ​{{> email}}
-      </p>
-    </div>
-
-    <div class="thumbnail thumbnail-big pop-hover">
-      <h3>Submit&nbsp;a&nbsp;Story</h3>
-
-      <p>
-        Have you used Energy Access Explorer to further your impact
-        on energy access? Tell us about how you did it by submitting
-        a story.
-      </p>
-
-      <p>
-        <button class="pop-hover">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfwAm2Mfr8JB3XyQU4M_xAjQimq0TqHkSaeoeY_m5p-oAt4Sw/viewform">Submit a story</a>
-        </button>
-      </p>
-    </div>
-
-    <div class="thumbnail thumbnail-big pop-hover">
-      <h3>Subscribe to email updates</h3>
-
-      <p>
-        Receive occasional Energy Access Explorer updates, information about new
-        datasets, project updates, energy access newsletters and events.
-      </p>
-
-      <p>
-        <button class="pop-hover">
-          <a href="/subscribe/?select=mailing">Subscribe</a>
-        </button>
-      </p>
-    </div>
+    <p>
+      Contact us at ​{{> email}}
+    </p>
   </div>
 
+  <div>
+    <h3>Submit a Story</h3>
+
+    <p>
+      Have you used Energy Access Explorer to further your impact
+      on energy access? Tell us about how you did it by submitting
+      a story.
+    </p>
+
+    <p>
+      <button class="pop-hover">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfwAm2Mfr8JB3XyQU4M_xAjQimq0TqHkSaeoeY_m5p-oAt4Sw/viewform">Submit a story</a>
+      </button>
+    </p>
+  </div>
+
+  <div>
+    <h3>Subscribe to email updates</h3>
+
+    <p>
+      Receive occasional Energy Access Explorer updates, information about new
+      datasets, project updates, energy access newsletters and events.
+    </p>
+
+    <p>
+      <button class="pop-hover">
+        <a href="/subscribe/?select=mailing">Subscribe</a>
+      </button>
+    </p>
+  </div>
+</section>
+
+<section>
   <p style="text-align: center;">
     Please submit questions, comments or feedback to
     {{> email}}.

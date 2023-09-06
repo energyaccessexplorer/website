@@ -1,5 +1,4 @@
 h2 {
-  font-size: 2em;
   flex-basis: 100%;
 }
 
@@ -11,20 +10,8 @@ section#user-stories .thumbnails {
   height: 400px;
 }
 
-section#blogs-publications .thumbnails {
-  /* flex-flow: column wrap; */
-  /* height: 700px; */
-  flex-flow: row wrap;
-}
-
-section#video .thumbnails {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-}
-
 section#video iframe {
-  margin: 2em 1em;
+  margin: 1em 0;
   display: block;
 }
 

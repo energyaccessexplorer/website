@@ -1,0 +1,35 @@
+#audiences {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin: 0;
+  margin-bottom: 4em;
+}
+
+#audiences div {
+  width: 25%;
+  margin-right: 2em;
+}
+
+#audiences div:last-child {
+  margin-right: 0;
+}
+
+#audiences div h4 {
+  height: 3em;
+}
+
+#audiences div img {
+  width: 6em;
+}
+
+#attribution {
+  display: block;
+  background-color: var(--the-green);
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+  max-width: unset;
+}

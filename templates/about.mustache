@@ -1,68 +1,171 @@
+<link href="/stylesheets/about.css" rel="stylesheet">
+
 <section class="banner"
          style="background-image: url({{> s3bucket}}/photos/51bee9f9903c0a2f51bea0e9415c88ad.jpg);">
   <h1>About</h1>
+
+  <div id="buttons">
+    <button>
+      <a href="https://wri-public-data.s3.amazonaws.com/EnergyAccess/Documents/21_BRO_Energy%20Access_v3_10-5.pdf">
+        Brochure
+      </a>
+    </button>
+
+    <button>
+      <a href="https://www.wri.org/publication/energy-access-explorer-data-and-methods">
+        Technical note
+      </a>
+    </button>
+  </div>
 </section>
 
-<section>
-  <p>
-    Energy Access Explorer is an online, open-source, interactive platform that
-    uses mapping to visualize the state of energy access in unserved and
-    underserved areas. It analyzes credible and public data to make the
-    connection between the demand and supply of energy.  Individuals can create
-    custom analyses on Energy Access Explorer to identify and prioritize areas
-    where energy markets can be expanded.
-  </p>
+<section class="two-cols">
+  <h2>What We Do <span style="display: block; width: 14em;"></span></h2>
 
-  <p>
-    Who are the primary audiences of Energy Access Explorer?
-  </p>
-
-  <ul>
-    <li><strong>Clean energy enterprises</strong> can use the platform to
-      access demographic and socio-economic data, which indicate consumer
-      ability to pay for electricity. This information can help identify gaps in
-      market opportunities.
-    </li>
-
-    <li><strong>Electrification planning agencies</strong> can use the platform
-      to explore the potential for grid extension, off-grid systems and
-      renewables for energy access in their countries.
-    </li>
-
-    <li><strong>Donors and Development Finance Institutions</strong> can use the platform to
-      identify areas where grants and support will have the most impact
-    </li>
-
-    <li><strong>Service delivery institutions</strong> in the health, education and agriculture sectors can use the platform to
-      get a better understanding of energy needs associated to development services.
-    </li>
-  </ul>
-
-  <p>
-    <a href="https://wri-public-data.s3.amazonaws.com/EnergyAccess/Documents/21_BRO_Energy%20Access_v3_10-5.pdf">Read more.</a>
-  <p>
-
-  <p>
-    World Resources Institute is committed to transparency and open data. The
-    data and methodology behind Energy Access Explorer are documented and
-    available for download. All the products, methodologies and datasets that
-    make up Energy Access Explorer are available for free use under the MIT
-    License.
-  </p>
-
-  <p>
-    Energy Access Explorer is a research initiative led by World Resources
-    Institute. Partners and local stakeholders contribute to the development and
-    update of the platform.  To learn more about Energy Access Explorer or
-    provide feedback, contact our team at {{> email}}.
+  <p style="margin: unset;">
+    <span style="color: var(--the-green)">Energy Access Explorer</span> is the
+    <strong>first, open-source, online and interactive geospatial platform</strong> that enables
+    <strong>energy planners, clean energy entrepreneurs, donors, and development
+      institutions</strong> to identify <strong>high-priority areas for energy
+      access interventions</strong>. EAE functions also as a dynamic information
+      system, reducing software engineering and data transaction costs for both
+      data providers and users and facilitating <strong>data management and
+      governance</strong>.
   </p>
 </section>
 
 <section>
+  <h2>Who are the primary audiences of Energy Access Explorer?</h2>
+
+  <div id="audiences">
+    <div>
+      <img src="/images/planning.png">
+
+      <h4>Electrification planning agencies</h4>
+
+      can use the platform to explore the potential for grid extension, off-grid
+      systems, clean cooking technologies and renewables for energy access in
+      their countries.
+    </div>
+
+    <div>
+      <img src="/images/enterprise.png">
+
+      <h4>Clean energy enterprises</h4>
+
+      can use the platform to access demographic and socio-economic data, which
+      indicate consumer ability to pay for energy services. This information can
+      help identify gaps in market opportunities.
+    </div>
+
+    <div>
+      <img src="/images/donors.png">
+
+      <h4>Donors and Development Finance Institutions</h4>
+
+      can use the platform to identify areas where grants and support will have
+      the most impact
+    </div>
+
+    <div>
+      <img src="/images/service.png">
+
+      <h4>Service delivery institutions</h4>
+
+      in the health, education, productive use of energy, agriculture sectors
+      can use the platform to get a better understanding of energy needs
+      associated to development services.
+    </div>
+
+    <div>
+      <img src="/images/service.png">
+
+      <h4>Clean Cooking Sector</h4>
+
+      Organizations and agencies can use the platform to identify areas where
+      the uptake of clean cooking technologies should be prioritized based on
+      location specific data on demand, supply, and environment.
+    </div>
+  </div>
+
+  <p style="margin-left: 0;">
+    <button>
+      <a href="https://wri-public-data.s3.amazonaws.com/EnergyAccess/Documents/21_BRO_Energy%20Access_v3_10-5.pdf">
+        Brochure
+      </a>
+    </button>
+  <p>
+</section>
+
+<section class="two-cols">
+  <h2>Methodology</h2>
+
+  <div style="margin: unset;">
+    <p>
+      Energy Access Explorer synthesizes and analyzes more than 50 geographic
+      data sets (per geography) on both energy supply and demand. It runs
+      multi-criteria analysis that uses location-specific resource availability
+      and infrastructure data to represent energy supply. It also incorporates
+      demographic data and data on social and productive uses to visualize
+      demand for energy services. Together, these supply and demand indicators
+      enable more comprehensive energy planning. Spatial analysis tools,
+      including multi-criteria analysis, overlays, filters, buffer zones help
+      users identify and prioritize areas where energy access can be expanded.
+    </p>
+
+    <p>
+      The tool incorporates remote sensing data as well as data from global,
+      national, sub-national and census databases that are either publicly
+      available or provided by international partners and local stakeholders. It
+      can host data available in various resolutions, scales and formats
+      allowing for better or new datasets to be incorporated once available. The
+      selection of data is based on literature review, a survey WRI conducts on
+      the importance of certain datasets in geospatial energy access planning
+      and user feedback. The list of essential data is reviewed by local
+      stakeholders to ensure the platform is relevant and applicable in the
+      local context.
+    </p>
+
+    <p>
+      <button>
+        <a href="https://www.wri.org/publication/energy-access-explorer-data-and-methods">
+          Technical note
+        </a>
+      </button>
+    </p>
+
+    <br>
+
+    <figure style="flex: unset; width: 100%;">
+      <img src="/images/eae-framework.png" style="width: 100%;">
+    </figure>
+  </div>
+</section>
+
+<section class="two-cols">
+  <h2>Open Data</h2>
+
+  <div style="margin: unset;">
+    <p>
+      World Resources Institute is committed to transparency and open data. The
+      data and methodology behind Energy Access Explorer are documented and
+      available for download. All the products, methodologies and datasets that
+      make up Energy Access Explorer are available for free use under the MIT
+      License.
+    </p>
+
+    <p>
+      Energy Access Explorer is a research initiative led by World Resources
+      Institute. Partners and local stakeholders contribute to the development and
+      update of the platform.  To learn more about Energy Access Explorer or
+      provide feedback, contact our team at {{> email}}.
+    </p>
+  </div>
+</section>
+
+<section id="attribution">
   <p>
     If you use this platform, partially or entirely, you must follow
-    the <a href="/attribution">attribution instructions</a>.
+    the <a href="/attribution" style="color: white; text-decoration: underline;">attribution instructions</a>.
   </p>
 </section>
-
-{{> partners-section}}

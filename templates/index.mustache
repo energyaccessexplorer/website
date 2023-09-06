@@ -1,46 +1,16 @@
-<link href="/stylesheets/index.css" rel="stylesheet" />
-<link href="/stylesheets/thumbnails.css" rel="stylesheet" />
+<link href="/stylesheets/index.css" rel="stylesheet">
+<link href="/stylesheets/thumbnails.css" rel="stylesheet">
 
 <section class="banner"
          style="background-image: url({{> s3bucket}}/photos/4271331030_b70c27cea8_b.jpg);">
   <h1>Energy Access Explorer</h1>
 
   <h3>
-    Energy Access Explorer provides the data and tools necessary to
-    create a future where all people have access to affordable,
-    reliable and modern energy.
+    An interactive online platform mapping the state of energy access in underserved areas across Africa and Asia.
   </h3>
 
-  <button class="pop-hover" style="font-size: 1em;"><a href="/tool/s">Explore Data</a></button>
-</section>
-
-<section>
-  <h2>Sample Analysis</h2>
-
-  <div class="thumbnails">
-    <div class="thumbnail thumbnail-med pop-hover"
-         style="background-image: url({{> s3bucket}}/photos/ce5fb292c6279dc7d9372bb1ddea107b.png);"
-         onclick="window.location = '/sample-analysis#services';">
-      <h3>Better Quality Services</h3>
-
-      <p>Expanding clean energy can improve healthcare and education in East Africa.</p>
-    </div>
-
-    <div class="thumbnail thumbnail-med pop-hover"
-         style="background-image: url({{> s3bucket}}/photos/90f1f98c41132a8a997c1f8523359693.png);"
-         onclick="window.location = '/sample-analysis#livelihood';">
-      <h3>Better Livelihoods</h3>
-
-      <p>Renewable energy potential is high for many East African households without reliable electricity.</p>
-    </div>
-
-    <div class="thumbnail thumbnail-med pop-hover"
-         style="background-image: url({{> s3bucket}}/photos/4271331728_f1486cc127_b.jpg);"
-         onclick="window.location = '/sample-analysis#productivity';">
-      <h3>Higher Productivity</h3>
-
-      <p>Renewable energy can boost East African economies and businesses.</p>
-    </div>
+  <div id="buttons">
+    <button><a href="/tool/s">Explore Data</a></button>
   </div>
 </section>
 
@@ -48,73 +18,9 @@
   <h2>Tutorial Videos</h2>
 
   <div class="thumbnails">
-    <iframe width="480" height="360" src="https://www.youtube-nocookie.com/embed/Giht5Mmboa8" frameborder="0" allow="encrypted-media" allowfullscreen=""></iframe>
-    <iframe width="480" height="360" src="https://www.youtube-nocookie.com/embed/j5eKuooycw8" frameborder="0" allow="encrypted-media" allowfullscreen=""></iframe>
+    <iframe width="525" height="290" src="https://www.youtube-nocookie.com/embed/Giht5Mmboa8" frameborder="0" allow="encrypted-media" allowfullscreen=""></iframe>
+    <iframe width="525" height="290" src="https://www.youtube-nocookie.com/embed/j5eKuooycw8" frameborder="0" allow="encrypted-media" allowfullscreen=""></iframe>
   </div>
 </section>
 
-<section id="blogs-publications">
-  <h2>Relevant Blogs and Publications</h2>
-
-  <div class="thumbnails">
-    <div class="thumbnail thumbnail-big pop-hover"
-         onclick="window.open('https://www.mott.org/news/articles/digital-platform-could-increase-access-to-modern-energy-services-in-africa/', '_blank');"
-         style="background-image: url({{> s3bucket}}/photos/Tanzania-solar-project_Smithey-edit-WP.jpg);">
-      <h3>Blog</h3>
-
-      <p>Digital platform could increase access to modern energy services in Africa</p>
-    </div>
-
-    <div class="thumbnail thumbnail-big pop-hover"
-         onclick="window.open('https://sun-connect.org/geospatial-data-can-help-investors-prioritize-energy-access-investments-to-build-more-resilient-communities/', '_blank');"
-         style="background-image: url({{> s3bucket}}/photos/sun-connect_article_figure.png);">
-      <h3>Blog</h3>
-
-      <p>Geospatial data can help investors prioritize energy access investments to build more resilient communities</p>
-    </div>
-
-    <div class="thumbnail thumbnail-big pop-hover"
-         onclick="window.open('https://sun-connect.org/reliable-data-to-power-the-clean-energy-transition-in-zambia/', '_blank');"
-         style="background-image: url({{> s3bucket}}/photos/EAE_ZMB.png);">
-      <h3>Blog</h3>
-
-      <p>Reliable data to power the clean energy transition in Zambia</p>
-    </div>
-
-    <div class="thumbnail thumbnail-big pop-hover"
-         onclick="window.open('https://www.wri.org/insights/integrated-energy-access-plans-kenya', '_blank');"
-         style="background-image: url({{> s3bucket}}/photos/kenya-village.jpg);">
-      <h3>Blog</h3>
-
-      <p>Integrated Planning Helps Kenya Close its Energy Access Gap</p>
-    </div>
-
-    <div class="thumbnail thumbnail-big pop-hover"
-         onclick="window.open('https://www.wri.org/insights/millions-east-africans-who-need-electricity-most-data-shows-renewable-energy-viable-and', '_blank');"
-         style="background-image: url({{> s3bucket}}/photos/84a99663c7272731880fe110d65397f6.jpg);">
-      <h3>Blog</h3>
-
-      <p>For the Millions of East Africans Who Need Electricity Most, Data Shows Renewable Energy Is a Viable – and Affordable – Solution</p>
-    </div>
-
-    <div class="thumbnail thumbnail-big pop-hover"
-         onclick="window.open('https://theshinecampaign.org/eae-wri/', '_blank');"
-         style="background-image: url({{> s3bucket}}/photos/4271332050_b6f636683b_b.jpg);">
-      <h3>Blog</h3>
-
-      <p>Energy Access Explorer - A data driven tool to ensure strategic clean energy access</p>
-    </div>
-
-    <div class="thumbnail thumbnail-big pop-hover"
-         onclick="window.open('https://www.wri.org/publication/energy-access-explorer-data-and-methods', '_blank');"
-         style="background-image: url({{> s3bucket}}/photos/9271377331_50f71581fd_b.jpg);">
-      <h3>Technical note</h3>
-
-      <p>
-        Energy Access Explorer: Data and Methods
-      </p>
-    </div>
-  </div>
-</section>
-
-{{> partners-section}}
+{{> blog-publications}}

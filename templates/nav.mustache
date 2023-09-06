@@ -11,18 +11,14 @@
 
   <a id="energy-access-link"
      href="/">
-    Energy Access Explorer
+    <img src="/images/EAE Logo_Horizontal White.svg"
+         style="width: 280px; margin-top: 4px;">
   </a>
 
   <div id="navigation-links">
     <a href="/tool/s"
        class="toggleable">
       Tool
-    </a>
-
-    <a href="/methodology"
-       class="toggleable">
-      Methodology
     </a>
 
     <a href="/about"
@@ -40,18 +36,31 @@
       User Stories
     </a>
 
-    <!--
-    <a href="/faq"
+    <a href="/partners"
        class="toggleable">
-      FAQ
+      Partners
     </a>
-    -->
   </div>
 </nav>
 
 <script>
+  const c = document.querySelector('nav #navigation-links');
+  const m = document.createElement('a');
+  m.className = "toggleable";
+
+  if (localStorage['token']) {
+    m.href = '/tool/m';
+    m.innerText = 'My EAE';
+  } else {
+    m.href = '/login';
+    m.innerText = 'Login';
+  }
+
+  c.append(m);
+
   (function() {
     const links = document.querySelectorAll('nav #navigation-links a');
+
     if (!links) return;
 
     for (var l of links) {

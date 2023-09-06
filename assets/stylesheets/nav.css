@@ -46,8 +46,12 @@ nav a {
   fill: var(--the-white);
 }
 
+nav a img {
+  display: block;
+}
+
 nav a.active {
-  color: var(--the-yellow);
+  font-weight: bold;
 }
 
 nav a:hover {

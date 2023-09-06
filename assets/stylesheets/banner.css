@@ -14,7 +14,6 @@ section.banner {
 
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
 
   color: var(--the-white);
@@ -26,8 +25,6 @@ section.banner * {
 }
 
 section.banner h1, section.banner h3 {
-  text-align: center;
-
   color: var(--the-white);
   text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
   font-weight: 300;
@@ -35,14 +32,20 @@ section.banner h1, section.banner h3 {
 
 section.banner h1 {
   font-size: 4em;
+  text-align: left;
+  padding-left: 2em;
+  margin: 0;
 }
 
 section.banner h3 {
   font-size: 2em;
 
+  padding: unset;
   padding-left: 4em;
   padding-right: 4em;
   width: auto;
+
+  margin: 0;
 }
 
 section.banner:before {
@@ -54,6 +57,35 @@ section.banner:before {
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.4);
+}
+
+section.banner #buttons {
+  margin: 0;
+  margin-top: 2em;
+  margin-left: 8em;
+}
+
+section.banner #buttons button {
+  font-size: 1em;
+  margin-right: 2em;
+}
+
+section.banner #buttons button:nth-child(odd) {
+  background-color: white;
+  border: 2px solid white;
+}
+
+section.banner #buttons button:nth-child(odd) a {
+  color: black;
+}
+
+section.banner #buttons button:nth-child(even) {
+  background-color: transparent;
+  border: 2px solid white;
+}
+
+section.banner #buttons button:nth-child(even) a {
+  color: white;
 }
 
 @media (max-width: 1080px) {

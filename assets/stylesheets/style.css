@@ -48,8 +48,19 @@
 }
 
 h1, h2, h3 {
-  font-weight: normal;
-  color: var(--the-green);
+  font-weight: bold;
+  color: black;
+}
+
+h2 {
+  font-size: 1.7em;
+  border-top: 5px solid black;
+  padding: 0.5em 0;
+}
+
+h3 {
+  font-size: 1.2em;
+  padding: 1em;
 }
 
 a {
@@ -89,12 +100,12 @@ dialog {
 button {
   border: 0;
   border-radius: 2px;
-  background-color: white;
-  color: var(--the-green);
+  background-color: var(--the-green);
+  color: white;
 }
 
 button a {
-  color: var(--the-green);
+  color: white;
   text-decoration: none;
   display: block;
   padding: 0.9em 1.3em;
