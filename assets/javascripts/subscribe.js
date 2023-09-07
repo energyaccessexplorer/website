@@ -1,5 +1,5 @@
 (async function() {
-	const mailing = "aHR0cHM6Ly9tYWlsaW5nLmNoZXN0bnV0LnZpc2lvbi9ib3VuY2Vy";
+	const mailing = "aHR0cHM6Ly9ub29wLm51L2JvdW5jZXI=";
 	const world = "https://world.energyaccessexplorer.org";
 	const url = new URL(location);
 
