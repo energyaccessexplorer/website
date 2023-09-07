@@ -1,3 +1,5 @@
+import selectlist from "/tool/lib/selectlist.js";
+
 (async function() {
 	const mailing = "aHR0cHM6Ly9ub29wLm51L2JvdW5jZXI=";
 	const world = "https://world.energyaccessexplorer.org";
