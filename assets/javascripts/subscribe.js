@@ -177,6 +177,9 @@ import selectlist from "/tool/lib/selectlist.js";
 		data['jsondata']['account'] = ['both', 'account'].includes(typeselect.value);
 		data['jsondata']['mailing'] = ['both', 'mailing'].includes(typeselect.value);
 
+		if (data['jsondata']['account'])
+			data['jsondata']['pass'] = crypto.randomUUID().slice(0,8);
+
 		fetch(atob(mailing) + '/signup', {
 			method: 'POST',
 			headers: {
@@ -189,6 +192,9 @@ import selectlist from "/tool/lib/selectlist.js";
 				p.className = 'status';
 				p.innerText = await r.text();
 				document.querySelector('section').append(p);
+
+				if (data['jsondata']['account'])
+					alert(data['jsondata']['pass']);
 			});
 	};
 
