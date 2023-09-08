@@ -13,7 +13,7 @@
     width: 24em;
     margin: auto;
     padding-top: 5em;
-    padding-bottom: 5em;
+    padding-bottom: 2em;
     text-align: center;
   }
 
@@ -32,6 +32,13 @@
     background-color: var(--the-green);
     margin: 0.7em auto;
   }
+
+  p#reg {
+    margin: auto;
+    font-size: 1.2em;
+    margin-bottom: 2em;
+    text-align: center;
+  }
 </style>
 
 <script type="module">
@@ -39,7 +46,17 @@
 
   const flashy = new flash();
 
-  document.addEventListener('DOMContentLoaded', _ => {
+  document.addEventListener('DOMContentLoaded', function() {
+    const p = document.createElement('p');
+    p.id = 'reg';
+
+    const a = document.createElement('a');
+    p.innerText = "Don't have an account? Create one ";
+    a.innerText = "here";
+    a.href = "/subscribe/?select=account";
+
+    p.append(a);
+
     document.querySelector('body > main').append(
       login_setup({
         "server": atob("aHR0cHM6Ly9ub29wLm51L2F1dGg="),
@@ -47,6 +64,6 @@
         "submit_text": "Login",
         "success": _ => window.location = "/tool/s/",
         "error": m => flashy.push(m)
-      }));
+      }), p);
   });
 </script>
