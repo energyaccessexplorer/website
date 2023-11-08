@@ -2,6 +2,17 @@ h2 {
   flex-basis: 100%;
 }
 
+#badges {
+  position: absolute;
+  top: 4em;
+  right: 4em;
+}
+
+#badges img {
+  width: 15em;
+  max-height: 15em;
+}
+
 section.banner {
   height: 800px;
 }
@@ -16,8 +27,21 @@ section#video iframe {
 }
 
 @media (max-width: 1080px) {
+  #badges {
+    position: static;
+    z-index: 2;
+    display: flex;
+    justify-content: end;
+    width: 100%;
+  }
+
+  #badges img {
+    width: 10em;
+    max-height: 10em;
+  }
+
   section#video iframe {
-	width: 100%;
+    width: 100%;
   }
 
   section {
