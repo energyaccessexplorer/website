@@ -1,5 +1,5 @@
 module energyaccessexplorer/website
 
-go 1.16
+go 1.21
 
-require github.com/cbroglie/mustache v1.2.0
+require github.com/cbroglie/mustache v1.4.0

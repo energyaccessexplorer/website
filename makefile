@@ -1,5 +1,15 @@
-.include ".env"
+default: build
 
+.include ".env"
+# in .env
+# WEBSITE_S3BUCKET = https://bucket.s3.amazonws.com/path
+# WEBSITE_DEST = /var/www/path
+# WEBSITE_PORT = 8000
+# WEBSITE_HOST = example.org
+# WEBSITE_SSH_USER = www
+# WEBSITE_SSH_HOST = srv
+# HTTP_SERVER = httpserver
+#
 BIN = ./bin
 DIST = ./dist
 
