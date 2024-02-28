@@ -236,7 +236,14 @@ font-size: 1.3em;
 				p.innerText = await r.text();
 				document.querySelector('section').append(p);
 
-				if (data['jsondata']['account'])
+				if (r.status < 400)
+					p.className = 'status';
+				else if (r.status < 500)
+					p.className = 'warn';
+				else
+					p.className = 'error';
+
+				if (r.ok && data['jsondata']['account'])
 					show_pass(data['jsondata']['pass']);
 			});
 	};
