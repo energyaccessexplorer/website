@@ -1,52 +1,19 @@
-<script src="/lib/login.js"></script>
+<link href="/stylesheets/password-form.css" rel="stylesheet">
 
 <style>
-  html {
-    box-sizing: border-box;
-  }
-
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
-
-  form {
-    width: 24em;
-    margin: auto;
-    padding-top: 5em;
-    padding-bottom: 2em;
-    text-align: center;
-  }
-
-  form input {
-    text-align: center;
-    margin: 0.5em 0;
-    font-size: 1.2em !important;
-    padding: 0.5em;
-    width: 100%;
-  }
-
-  form button {
-    font-size: 1.2em !important;
-    padding: 0.5em 1.3em;
-    color: var(--the-white);
-    background-color: var(--the-green);
-    margin: 0.7em auto;
-  }
-
-  p#reg {
-    margin: auto;
-    font-size: 1.2em;
-    padding-bottom: 4em;
-    text-align: center;
+  p:last-child {
+    padding: 0 0 4em;
   }
 </style>
+
+<script src="/lib/login.js"></script>
 
 <script type="module">
   import flash from "/lib/flash.js";
 
   const flashy = new flash();
 
-  document.addEventListener('DOMContentLoaded', function() {
+  function account() {
     const p = document.createElement('p');
     p.id = 'reg';
 
@@ -57,6 +24,22 @@
 
     p.append(a);
 
+    return p;
+  };
+
+  function password() {
+    const p = document.createElement('p');
+
+    const a = document.createElement('a');
+    a.innerText = "Forgot password?";
+    a.href = "/password-reset";
+
+    p.append(a);
+
+    return p;
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('body > main').append(
       login_setup({
         "server": atob("aHR0cHM6Ly9ub29wLm51L2F1dGg="),
@@ -64,6 +47,9 @@
         "submit_text": "Login",
         "success": _ => window.location = "/tool/s/",
         "error": m => flashy.push(m)
-      }), p);
+      }),
+      account(),
+      password(),
+    );
   });
 </script>
