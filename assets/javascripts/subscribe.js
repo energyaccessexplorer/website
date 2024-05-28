@@ -77,7 +77,7 @@ font-size: 1.3em;
 		n: "areas_of_interest",
 		h: "Areas of Interest",
 		t: "text",
-		o: ["Strategic Energy Planning", "Market Intelligence", "Investment for Impact", "Other"],
+		o: ["Strategic Energy Planning", "Market Intelligence", "Investment for Impact", "Education", "Health", "Agriculture", "Clean Cooking", "Other"],
 		r: true
 	}, {
 		n: "city",
