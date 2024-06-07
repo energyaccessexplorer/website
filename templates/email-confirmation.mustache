@@ -1,3 +1,7 @@
+<link href="/stylesheets/password-form.css" rel="stylesheet">
+
+<link href="/stylesheets/status-p.css" rel="stylesheet">
+
 <style>
   html {
     box-sizing: border-box;
@@ -16,11 +20,21 @@
     padding: 4em;
     display: none;
   }
+
+  form {
+    padding-top: 0;
+  }
 </style>
 
 <p>
-  Email confirmed. Go <a href="/login">log in</a> now!
+  Email confirmed. Lets set your password.
 </p>
+
+<section id="reset-password-request" style="display: none;"></section>
+
+<span style="display: none;">
+{{> password-reset-reset-password}}
+</span>
 
 <script type="module">
   document.addEventListener('DOMContentLoaded', function() {
@@ -43,13 +57,18 @@
       .catch(err => ({ "ok": false, "status": 0 }))
       .then(async r => {
         const p = document.querySelector('main p');
+        const s = document.querySelector('#reset-password');
 
-        if (r.status > 399)
-          p.innerText = "Error: " + (await r.text());
-        else if (!r.status)
-          p.innerText = "Something went wrong...";
+        if (!r.status)
+          p.innerHTML = "Something went wrong...";
+        else if (!r.ok)
+          p.innerHTML = "Error: " + (await r.text());
 
         p.style.display = 'block';
+
+        s.parentElement.style.display = r.ok ? 'block' : 'none';
       });
   });
 </script>
+
+<script src="/javascripts/password-reset.js" type="module"></script>

@@ -1,47 +1,6 @@
 import selectlist from "/tool/lib/selectlist.js";
 import modal from "/lib/modal.js";
 
-function show_pass(str) {
-	const d = document.createElement('div');
-	const p = document.createElement('p');
-	const pre = document.createElement('pre');
-
-	const p1 = document.createElement('p');
-	const login = document.createElement('a');
-
-	pre.style = `
-font-size: 3em;
-margin: auto;
-background-color: #eee;
-text-align: center;
-padding: 20px;
-`;
-
-	pre.innerHTML = str;
-
-	p.innerText = "Please save your store your password safely. You will need it to log in into MyEAE.";
-
-	login.href = "/login";
-	login.innerText = "Go to login";
-
-	p1.style = `
-margin: 1em;
-text-align: right;
-font-weight: bold;
-font-size: 1.3em;
-`;
-
-	p1.append(login);
-
-	d.append(p, pre, p1);
-
-	const m = new modal({
-		"header": "Save your password",
-		"content": d,
-	});
-
-	m.show();
-};
 
 (async function() {
 	const mailing = "aHR0cHM6Ly9ub29wLm51L2JvdW5jZXI=";
@@ -220,9 +179,6 @@ font-size: 1.3em;
 		data['jsondata']['account'] = ['both', 'account'].includes(typeselect.value);
 		data['jsondata']['mailing'] = ['both', 'mailing'].includes(typeselect.value);
 
-		if (data['jsondata']['account'])
-			data['jsondata']['pass'] = crypto.randomUUID().slice(0,8);
-
 		fetch(atob(mailing) + '/signup', {
 			method: 'POST',
 			headers: {
@@ -242,9 +198,6 @@ font-size: 1.3em;
 					p.className = 'warn';
 				else
 					p.className = 'error';
-
-				if (r.ok && data['jsondata']['account'])
-					show_pass(data['jsondata']['pass']);
 			});
 	};
 
