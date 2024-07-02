@@ -39,6 +39,12 @@ import modal from "/lib/modal.js";
 		o: ["Strategic Energy Planning", "Market Intelligence", "Investment for Impact", "Education", "Health", "Agriculture", "Clean Cooking", "Other"],
 		r: true
 	}, {
+		n: "gender",
+		h: "Gender",
+		t: "select",
+		o: ["Female", "Male", "Other", "Prefer not to answer"],
+		r: false
+	}, {
 		n: "city",
 		h: "City",
 		t: "text",
@@ -76,30 +82,58 @@ import modal from "/lib/modal.js";
 	const form = document.createElement('form');
 
 	for (const f of fields) {
-		const i = document.createElement('input');
-		i.name = f.n;
-		i.type = f.t;
-		i.placeholder = f.h;
+		let i;
 
-		if (f.r) i.setAttribute('required', '');
+		switch (f.t) {
+		case 'select': {
+			i = document.createElement('select')
 
-		if (f.o) {
-			i.setAttribute('list', 'datalist-' + f.n);
-			i.setAttribute('autocomplete', 'off');
-
-			const list = document.createElement('datalist');
-			list.id = 'datalist-' + f.n;
+			const s = document.createElement('option');
+			s.setAttribute('disabled', '');
+			s.setAttribute('selected', '');
+			s.innerText = f.h;
+			i.append(s)
 
 			for (const o of f.o) {
 				const e = document.createElement('option');
 				e.value = o;
 				e.innerText = o;
 
-				list.append(e)
+				i.append(e)
 			}
 
-			document.body.append(list);
+			break;
 		}
+
+		default:
+			i = document.createElement('input');
+			i.type = f.t;
+
+			if (f.o?.length) {
+				i.setAttribute('list', 'datalist-' + f.n);
+				i.setAttribute('autocomplete', 'off');
+
+				const list = document.createElement('datalist');
+				list.id = 'datalist-' + f.n;
+
+				for (const o of f.o) {
+					const e = document.createElement('option');
+					e.value = o;
+					e.innerText = o;
+
+					list.append(e)
+				}
+
+				document.body.append(list);
+			}
+
+			break;
+		}
+
+		i.name = f.n;
+		i.placeholder = f.h;
+
+		if (f.r) i.setAttribute('required', '');
 
 		form.append(i);
 	}
@@ -109,9 +143,9 @@ import modal from "/lib/modal.js";
 
 	const typeoptions = {
 		"": "Select a registration type",
+		"both": "User account and Mailing list",
 		"mailing": "Mailing list",
 		"account": "User account",
-		"both": "User account and Mailing list",
 	};
 
 	const os = Object.keys(typeoptions).map(k => {
