@@ -200,7 +200,7 @@ import modal from "/lib/modal.js";
 		data['email'] = form.querySelector(`input[name=email]`).value;
 
 		for (const f of fields) {
-			const v = form.querySelector(`input[name=${f.n}]`).value;
+			const v = form.querySelector(`[name=${f.n}]`).value;
 
 			data['jsondata'][f.n] = v;
 
