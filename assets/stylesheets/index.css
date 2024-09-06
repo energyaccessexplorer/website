@@ -6,6 +6,7 @@ h2 {
   position: absolute;
   top: 4em;
   right: 4em;
+  display: flex;
 }
 
 #badges img {
