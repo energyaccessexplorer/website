@@ -1,0 +1,10 @@
+.areas_of_interest_select:not(.is-focused) .choices__list--multiple:empty::after {
+    position: absolute;
+    content: "Areas of Interest";
+    padding: 7px 10px;
+    top: 50%;
+    left: 3px;
+    font-size: medium;
+    color: #878787;
+    transform: translateY(-50%);
+}

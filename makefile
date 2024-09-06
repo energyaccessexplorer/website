@@ -22,7 +22,7 @@ build: deps mustache
 	${BIN}/build
 
 start:
-	${HTTP_SERVER} --port ${WEBSITE_PORT} --dir ${DIST}
+	${HTTP_SERVER} --directory ${DIST} ${WEBSITE_PORT}
 
 mustache:
 	go get
