@@ -98,14 +98,14 @@ import selectlist from "/tool/lib/selectlist.js";
 			}
 
 			f.o.forEach(optionValue => {
-				const optionElement = document.createElement('option');
-				optionElement.value = optionValue;
-				optionElement.innerText = optionValue;
-				i.append(optionElement);
+				const option_element = document.createElement('option');
+				option_element.value = optionValue;
+				option_element.innerText = optionValue;
+				i.append(option_element);
 			});
 		
 			break;
-		}		
+		}
 
 		default:
 			i = document.createElement('input');
@@ -207,9 +207,9 @@ import selectlist from "/tool/lib/selectlist.js";
 			data['jsondata'][f.n] = v;
 
 			if (f.n === 'areas_of_interest') {
-				const areasOfInterestSelect = form.querySelector(`[name=${f.n}]`)
-				const selectedValues = Array.from(areasOfInterestSelect.selectedOptions).map(option => option.value);
-				data['settings'][f.n] = selectedValues;
+				const areas_of_interest_select = form.querySelector(`[name=${f.n}]`)
+				const selected_values = Array.from(areas_of_interest_select.selectedOptions).map(option => option.value);
+				data['settings'][f.n] = selected_values;
 			}
 		}
 
@@ -242,8 +242,8 @@ import selectlist from "/tool/lib/selectlist.js";
 
 	document.querySelector('main section').append(form);
 
-	const areasOfInterestSelect = document.querySelector('[name="areas_of_interest"]');
-    new Choices(areasOfInterestSelect, {
+	const areas_of_interest_select = document.querySelector('[name="areas_of_interest"]');
+	new Choices(areas_of_interest_select, {
 		classNames: {
 			containerOuter: ['choices areas_of_interest_select'],
 		},
