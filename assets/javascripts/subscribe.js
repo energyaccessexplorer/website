@@ -1,7 +1,6 @@
 import selectlist from "/tool/lib/selectlist.js";
 import modal from "/lib/modal.js";
 
-
 (async function() {
 	const mailing = "aHR0cHM6Ly9ub29wLm51L2JvdW5jZXI=";
 	const world = "https://world.energyaccessexplorer.org";
@@ -135,6 +134,50 @@ import modal from "/lib/modal.js";
 
 		if (f.r) i.setAttribute('required', '');
 
+		if (i.name === 'areas_of_interest') {
+			function change(e) {
+				let d = "";
+
+				if (this.value === "") {
+					if (this.remove_button) this.remove_button.remove();
+					this.remove();
+					return;
+				} else if (this.once) {
+					return;
+				} else {
+					this.once = true;
+
+					d = document.createElement('button');
+					d.setAttribute('type', 'button');
+					d.innerHTML = "&times;";
+					d.className = "remove";
+					d.onclick = e => {
+						e.preventDefault();
+
+						d.remove();
+						this.remove();
+
+						return false;
+					};
+
+					this.remove_button = d;
+				}
+
+				const x = this.cloneNode();
+				x.value = "";
+				x.setAttribute('placeholder', i.getAttribute('placeholder') + " (optional)");
+				x.removeAttribute('required');
+				x.onchange = change;
+
+				this.insertAdjacentElement('afterend', x);
+				this.insertAdjacentElement('afterend', d);
+
+				x.focus();
+			};
+
+			i.onchange = change;
+		}
+
 		form.append(i);
 	}
 
@@ -200,13 +243,21 @@ import modal from "/lib/modal.js";
 		data['email'] = form.querySelector(`input[name=email]`).value;
 
 		for (const f of fields) {
+			if (f.n === 'areas_of_interest') continue;
+
 			const v = form.querySelector(`[name=${f.n}]`).value;
 
 			data['jsondata'][f.n] = v;
-
-			if (f.n === 'areas_of_interest')
-				data['settings'][f.n] = v;
 		}
+
+		data['jsondata']['areas_of_interest'] = (function() {
+			const r = [];
+
+			for (const e of form.querySelectorAll(`[name="areas_of_interest"]`))
+				if (e.value !== "") r.push(e.value);
+
+			return [...new Set(r)];
+		})();
 
 		data['jsondata']['country'] = form.querySelector(`input[name=country]`).value;
 
