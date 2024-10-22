@@ -32,9 +32,20 @@ jobs:
         run: |
           DEST=dist/lib ./bin/deps
 
-      - uses: burnett01/rsync-deployments@7.0.1
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.1.0
         with:
-          switches: --recursive --verbose --delete-before --relative
+          host:     ${{ secrets.PR_DEPLOY_HOST }}
+          username: ${{ secrets.PR_DEPLOY_USER }}
+          port:     ${{ secrets.PR_DEPLOY_PORT }}
+          key:      ${{ secrets.PR_DEPLOY_KEY }}
+          script:   |
+            mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/${{ github.head_ref || github.ref_name }}/website
+
+      - name: Deploy the thing
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: --recursive --verbose --delete-before
           path: dist/
           remote_path: ${{ secrets.PR_DEPLOY_PATH }}/${{ github.head_ref || github.ref_name }}/website
           remote_host: ${{ secrets.PR_DEPLOY_HOST }}
