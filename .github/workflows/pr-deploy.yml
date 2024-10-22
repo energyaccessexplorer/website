@@ -1,6 +1,9 @@
 name: PR DEPLOY
 
 on:
+  push:
+    branches: [ testing-pr-deploy ]
+
   pull_request:
     branches: [ trunk ]
 
@@ -31,7 +34,7 @@ jobs:
 
       - uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: --recursive --verbose --delete-before --mkpath
+          switches: --recursive --verbose --delete-before --relative
           path: dist/
           remote_path: ${{ secrets.PR_DEPLOY_PATH }}/${{ github.head_ref || github.ref_name }}/website
           remote_host: ${{ secrets.PR_DEPLOY_HOST }}
