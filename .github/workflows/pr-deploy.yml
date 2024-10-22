@@ -1,10 +1,15 @@
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push
+# Controls when the action will run. Triggers the workflow on pull request
 # events but only for the trunk branch
 on:
+  # pull_request:
+  #   branches: [ trunk ]
   push:
-    branches: [ trunk ]
+    branches: [ testing-pr-deploy ]
+
+env:
+ BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,10 +38,10 @@ jobs:
       # Runs a single command using the runners shell
       - uses: burnett01/rsync-deployments@4.1
         with:
-          switches: --recursive --verbose --delete-before
+          switches: --recursive --verbose --delete-before --mkpath
           path: dist/
-          remote_host: ${{ secrets.DEPLOY_HOST }}
-          remote_port: ${{ secrets.DEPLOY_PORT }}
-          remote_user: ${{ secrets.DEPLOY_USER }}
-          remote_path: ${{ secrets.DEPLOY_PATH }}
-          remote_key: ${{ secrets.DEPLOY_KEY }}
+          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/${{ github.head_ref || github.ref_name }}/website
+          remote_host: ${{ secrets.PR_DEPLOY_HOST }}
+          remote_port: ${{ secrets.PR_DEPLOY_PORT }}
+          remote_user: ${{ secrets.PR_DEPLOY_USER }}
+          remote_key: ${{ secrets.PR_DEPLOY_KEY }}
