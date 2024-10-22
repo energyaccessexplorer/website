@@ -1,14 +1,14 @@
 name: PR DEPLOY
 
 on:
-  push:
-    branches: [ testing-pr-deploy ]
-
   pull_request:
     branches: [ trunk ]
 
+  repository_dispatch:
+    types: [ trigger-workflow ]
+
 env:
-  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+  BRANCH_NAME: ${{ github.event.client_payload.branch_name || github.head_ref || github.ref_name }}
 
 jobs:
   build-deploy:
@@ -40,14 +40,14 @@ jobs:
           port:     ${{ secrets.PR_DEPLOY_PORT }}
           key:      ${{ secrets.PR_DEPLOY_KEY }}
           script:   |
-            mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/${{ github.head_ref || github.ref_name }}/website
+            mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/$BRANCH_NAME
 
       - name: Deploy the thing
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: --recursive --verbose --delete-before
+          switches: --recursive --verbose
           path: dist/
-          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/${{ github.head_ref || github.ref_name }}/website
+          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/$BRANCH_NAME/
           remote_host: ${{ secrets.PR_DEPLOY_HOST }}
           remote_port: ${{ secrets.PR_DEPLOY_PORT }}
           remote_user: ${{ secrets.PR_DEPLOY_USER }}
