@@ -26,7 +26,8 @@ jobs:
         run: |
           DEST=dist/lib ./bin/deps
 
-      - uses: burnett01/rsync-deployments@7.0.1
+      - name: Deploy the thing
+        uses: burnett01/rsync-deployments@7.0.1
         with:
           switches: --recursive --verbose --delete-before
           path: dist/
