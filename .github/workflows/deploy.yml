@@ -19,6 +19,13 @@ jobs:
         run: |
           sudo apt-get install -y bmake curl
 
+      - name: Build .env
+        run: |
+          cat <<- EOF >.env
+          	WEBSITE_DEST = ${{ secrets.PR_DEPLOY_PATH }}
+          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          EOF
+
       - name: Build the thing
         run: |
           bmake build
