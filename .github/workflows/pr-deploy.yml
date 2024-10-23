@@ -21,15 +21,20 @@ jobs:
         with:
           go-version: 'stable'
 
+      - name: Install build dependencies
+        run: |
+          sudo apt-get install -y bmake curl
+
+      - name: Build .env
+        run: |
+          cat <<- EOF >.env
+          	WEBSITE_DEST = ${{ secrets.PR_DEPLOY_PATH }}
+          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          EOF
+
       - name: Build the thing
         run: |
-          go get -v
-          go build -v -o mustache mustache.go
-          ./bin/build
-
-      - name: Install dependencies
-        run: |
-          DEST=dist/lib ./bin/deps
+          bmake build
 
       - name: Patch for relative paths
         run: |
