@@ -20,11 +20,10 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: 'stable'
-        id: go
 
       - name: Build the thing
         run: |
-          go get -v -d
+          go get -v
           go build -v -o mustache mustache.go
           ./bin/build
 
@@ -32,7 +31,11 @@ jobs:
         run: |
           DEST=dist/lib ./bin/deps
 
-      - name: name: Make destination directory
+      - name: Patch for relative paths
+        run: |
+          patch -p1 <relative-paths.diff
+
+      - name: Make destination directory
         uses: appleboy/ssh-action@v1.1.0
         with:
           host:     ${{ secrets.PR_DEPLOY_HOST }}
