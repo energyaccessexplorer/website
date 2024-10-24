@@ -1,4 +1,4 @@
-import "/lib/cookie-notice.js";
+import "{{> templates/base}}/lib/cookie-notice.js";
 
 new cookieNoticeJS({
 	'messageLocales': {

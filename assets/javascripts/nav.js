@@ -19,12 +19,12 @@ if (localStorage['token']) {
 
 	o = document.createElement('a');
 	o.innerText = "Log Out";
-	o.href = "/login";
+	o.href = window.BASE + '/login';
 
 	d.append(e, o);
 	m.append(d);
 } else {
-	m.href = '/login';
+	m.href = window.BASE + '/login';
 	m.innerText = 'Login';
 }
 

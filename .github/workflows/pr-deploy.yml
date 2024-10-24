@@ -34,6 +34,8 @@ jobs:
 
       - name: Build the thing
         run: |
+          printf "/$BRANCH_NAME" > templates/base.mustache
+
           bmake build
 
       - name: Patch for relative paths
