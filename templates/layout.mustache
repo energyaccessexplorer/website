@@ -17,7 +17,11 @@
 
     <title>Energy Access Explorer</title>
 
-    <script src="{{> base}}/javascripts/google.js"></script>
+    {{> cookie}}
+
+    {{> google}}
+
+    {{> transifex}}
 
     {{> head}}
   </head>
@@ -32,7 +36,5 @@
     </main>
 
     {{> footer}}
-
-    <script src="{{> base}}/javascripts/cookie.js" type="module"></script>
   </body>
 </html>
