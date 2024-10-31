@@ -2,7 +2,7 @@ import selectlist from "/tool/lib/selectlist.js";
 import modal from "/lib/modal.js";
 
 (async function() {
-	const mailing = "aHR0cHM6Ly9ub29wLm51L2JvdW5jZXI=";
+	const registration = "https://eae_auth.fotomei.com";
 	const world = "https://world.energyaccessexplorer.org";
 	const url = new URL(location);
 
@@ -64,19 +64,6 @@ import modal from "/lib/modal.js";
 		p.innerText = "Something went wrong with our setup. Could you come back later, please?";
 		m.append(p);
 	};
-
-	const token = await fetch(atob(mailing) + '/token')
-		.catch(e => tokenfail)
-		.then(r => {
-			if (!r.ok) {
-				tokenfail();
-				throw "Failed to get token."
-			}
-
-			return r;
-		})
-		.then(r => r.text())
-		.then(x => data['cfs'] = x);
 
 	const form = document.createElement('form');
 
@@ -264,12 +251,12 @@ import modal from "/lib/modal.js";
 		data['jsondata']['account'] = ['both', 'account'].includes(typeselect.value);
 		data['jsondata']['mailing'] = ['both', 'mailing'].includes(typeselect.value);
 
-		fetch(atob(mailing) + '/signup', {
+		fetch(registration + '/signup', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json;charset=utf-8;'
+				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(data)
+			body: JSON.stringify(finalData)
 		})
 			.then(async r => {
 				const p = document.createElement('p');
