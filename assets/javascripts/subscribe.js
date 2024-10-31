@@ -251,6 +251,11 @@ import modal from "/lib/modal.js";
 		data['jsondata']['account'] = ['both', 'account'].includes(typeselect.value);
 		data['jsondata']['mailing'] = ['both', 'mailing'].includes(typeselect.value);
 
+		const finalData = {
+			...data,
+			token: localStorage.getItem('token')
+		};
+
 		fetch(registration + '/signup', {
 			method: 'POST',
 			headers: {
