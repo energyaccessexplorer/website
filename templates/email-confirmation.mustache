@@ -1,6 +1,6 @@
-<link href="/stylesheets/password-form.css" rel="stylesheet">
+<link href="{{> base}}/stylesheets/password-form.css" rel="stylesheet">
 
-<link href="/stylesheets/status-p.css" rel="stylesheet">
+<link href="{{> base}}/stylesheets/status-p.css" rel="stylesheet">
 
 <style>
   html {
@@ -45,7 +45,7 @@
     const uuid = url.searchParams.get('uuid');
     const world = 'eae';
 
-    if (!email || !uuid) window.location = '/login';
+    if (!email || !uuid) window.location = '{{> base}}/login';
 
     fetch(atob("aHR0cHM6Ly9ub29wLm51L2F1dGgvZW1haWwtY29uZmlybWF0aW9u"), {
 	  "method": 'POST',
@@ -71,4 +71,4 @@
   });
 </script>
 
-<script src="/javascripts/password-reset.js" type="module"></script>
+<script src="{{> base}}/javascripts/password-reset.js" type="module"></script>

@@ -1,0 +1,67 @@
+name: PR DEPLOY
+
+on:
+  pull_request:
+    branches: [ trunk ]
+
+  repository_dispatch:
+    types: [ trigger-workflow ]
+
+env:
+  BRANCH_NAME: ${{ github.event.client_payload.branch_name || github.head_ref || github.ref_name }}
+  DESTINATION: ${{ github.event.client_payload.destination || github.head_ref || github.ref_name }}
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get install -y bmake curl
+
+      - name: Build .env
+        run: |
+          cat <<- EOF >.env
+          	WEBSITE_DEST = ${{ secrets.PR_DEPLOY_PATH }}
+          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          EOF
+
+      - name: Build the thing
+        run: |
+          printf "/$DESTINATION" > templates/base.mustache
+
+          bmake build
+
+      - name: Patch for relative paths
+        run: |
+          patch -p1 <relative-paths.diff
+
+      - name: Make destination directory
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host:     ${{ secrets.PR_DEPLOY_HOST }}
+          username: ${{ secrets.PR_DEPLOY_USER }}
+          port:     ${{ secrets.PR_DEPLOY_PORT }}
+          key:      ${{ secrets.PR_DEPLOY_KEY }}
+          script:   |
+            mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/${{ env.DESTINATION }}
+
+      - name: Deploy the thing
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: --recursive --verbose
+          path: dist/
+          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/$DESTINATION/
+          remote_host: ${{ secrets.PR_DEPLOY_HOST }}
+          remote_port: ${{ secrets.PR_DEPLOY_PORT }}
+          remote_user: ${{ secrets.PR_DEPLOY_USER }}
+          remote_key:  ${{ secrets.PR_DEPLOY_KEY }}

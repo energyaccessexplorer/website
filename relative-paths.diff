@@ -1,0 +1,50 @@
+--- a/dist-build/javascripts/subscribe.js
++++ b/dist/javascripts/subscribe.js
+@@ -1,5 +1,5 @@
+-import selectlist from "/tool/lib/selectlist.js";
+-import modal from "/lib/modal.js";
++import selectlist from "../tool/lib/selectlist.js";
++import modal from "../lib/modal.js";
+ 
+ (async function() {
+ 	const mailing = "aHR0cHM6Ly9ub29wLm51L2JvdW5jZXI=";
+--- a/dist-build/stylesheets/nav.css
++++ b/dist/stylesheets/nav.css
+@@ -25,7 +25,7 @@ nav:before {
+ 
+   opacity: 0.15;
+ 
+-  background-image: url(/images/nav-watermark.png);
++  background-image: url(../images/nav-watermark.png);
+   background-size: cover;
+   background-position: center center;
+   background-repeat: no-repeat;
+--- a/dist-build/stylesheets/style.css
++++ b/dist/stylesheets/style.css
+@@ -18,7 +18,7 @@
+   font-family: without-serif;
+   font-style: normal;
+   font-weight: 400;
+-  src: local('Lato Regular'), local('Lato-Regular'), url(/lib/fonts/lato.woff2) format('woff2');
++  src: local('Lato Regular'), local('Lato-Regular'), url(../lib/fonts/lato.woff2) format('woff2');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+ }
+ 
+@@ -27,7 +27,7 @@
+   font-family: without-serif;
+   font-style: normal;
+   font-weight: 700;
+-  src: local('Lato Bold'), local('Lato-Bold'), url(/lib/fonts/lato-bold.woff2) format('woff2');
++  src: local('Lato Bold'), local('Lato-Bold'), url(../lib/fonts/lato-bold.woff2) format('woff2');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+ }
+ 
+@@ -36,7 +36,7 @@
+   font-family: without-serif;
+   font-style: normal;
+   font-weight: 300;
+-  src: local('Lato Light'), local('Lato-Light'), url(/lib/fonts/lato-light.woff2) format('woff2');
++  src: local('Lato Light'), local('Lato-Light'), url(../lib/fonts/lato-light.woff2) format('woff2');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+ }
+ 

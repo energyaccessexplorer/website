@@ -7,24 +7,24 @@ m.id = "my-eae";
 let d = "";
 
 if (localStorage['token']) {
-	m.href = '/tool/m';
+	m.href = window.BASE + '/tool/m';
 	m.innerText = 'My EAE';
 
 	d = document.createElement('div');
 	d.id = 'my-eae-dropdown';
 
 	e = document.createElement('a');
-	e.href = '/tool/m';
+	e.href = window.BASE + '/tool/m';
 	e.innerText = 'Dashboard';
 
 	o = document.createElement('a');
 	o.innerText = "Log Out";
-	o.href = "/login";
+	o.href = window.BASE + '/login';
 
 	d.append(e, o);
 	m.append(d);
 } else {
-	m.href = '/login';
+	m.href = window.BASE + '/login';
 	m.innerText = 'Login';
 }
 
