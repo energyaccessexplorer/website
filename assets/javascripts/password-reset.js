@@ -1,7 +1,6 @@
 const url = new URL(location);
 
 const uuid = url.searchParams.get('uuid');
-const world = "eae";
 
 const s = "https://api.resourcewatch.org/auth";
 
@@ -32,7 +31,6 @@ function request() {
 			"method": "POST",
 			"headers": { "Accept": "application/json", "Content-Type": "application/json" },
 			"body": JSON.stringify({
-				world,
 				"email": ei.value,
 			})
 		}).then(r => status.call(this, r));
@@ -70,7 +68,6 @@ function reset() {
 			"method": "PATCH",
 			"headers": { "Accept": "application/json", "Content-Type": "application/json" },
 			"body": JSON.stringify({
-				uuid, world,
 				"password": (await sha256(pi.value)),
 				"password_confirmation": (await sha256(ci.value)),
 			})

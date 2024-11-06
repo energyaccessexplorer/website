@@ -264,17 +264,18 @@ import modal from "/lib/modal.js";
 			body: JSON.stringify(finalData)
 		})
 			.then(async r => {
+				const message = r?.response?.details?.errors?.[0]?.detail || "An unknown error occurred";
 				const p = document.createElement('p');
-				p.className = 'status';
-				p.innerText = await r.text();
-				document.querySelector('section').append(p);
 
-				if (r.status < 400)
+				if (r.status < 400) {
+					p.innerText = await r.text();
 					p.className = 'status';
-				else if (r.status < 500)
-					p.className = 'warn';
-				else
-					p.className = 'error';
+				} else {
+					p.innerText = message;
+					p.className = r.status < 500 ? 'warn' : 'error';
+				}
+
+				document.querySelector('section').append(p);
 			});
 	};
 
