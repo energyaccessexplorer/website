@@ -10,15 +10,11 @@ default: build
 BIN = ./bin
 DIST = ./dist
 
+build: deps mustache
 .ifndef WEBSITE_S3BUCKET
 .error "WEBSITE_S3BUCKET command is not defined. Hej då."
 .endif
 
-.ifndef WEBSITE_DEST
-.error "WEBSITE_DEST command is not defined. Hej då."
-.endif
-
-build: deps mustache
 	@ printf "%s" ${WEBSITE_S3BUCKET} > templates/s3bucket.mustache
 	@ ${BIN}/build
 
@@ -31,6 +27,10 @@ deps:
 	@ DEST=assets/lib ${BIN}/deps
 
 sync:
+.ifndef WEBSITE_DEST
+.error "WEBSITE_DEST command is not defined. Hej då."
+.endif
+
 	@ rsync -OPrv \
 		--checksum \
 		--copy-links \
