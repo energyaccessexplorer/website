@@ -22,6 +22,9 @@ mustache:
 	@ go get
 	@ go build -o mustache mustache.go
 
+clean:
+	@ rm -rf assets/lib ${DIST}
+
 deps:
 	@ mkdir -p assets/lib/fonts
 	@ DEST=assets/lib ${BIN}/deps
