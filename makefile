@@ -31,11 +31,18 @@ mustache:
 	@ go get
 	@ go build -o mustache mustache.go
 
+clean:
+	@ rm -rf assets/lib ${DIST}
+
 deps:
 	@ mkdir -p assets/lib/fonts
 	@ DEST=assets/lib ${BIN}/deps
 
 sync:
+.ifndef WEBSITE_DEST
+.error "WEBSITE_DEST command is not defined. Hej då."
+.endif
+
 	@ rsync -OPrv \
 		--checksum \
 		--copy-links \
