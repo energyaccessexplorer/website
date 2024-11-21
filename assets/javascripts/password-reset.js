@@ -1,9 +1,8 @@
 const url = new URL(location);
 
 const uuid = url.searchParams.get('uuid');
-const world = "eae";
 
-const s = atob("aHR0cHM6Ly9ub29wLm51L2F1dGg=");
+const s = "https://api.resourcewatch.org/auth";
 
 function status(r) {
 	if (r.ok)
@@ -28,11 +27,10 @@ function request() {
 		const bi = this.querySelector('[type=submit]');
 		bi.setAttribute('disabled', '');
 
-		fetch(`${s}/password-reset`, {
+		fetch(`${s}/reset-password`, {
 			"method": "POST",
 			"headers": { "Accept": "application/json", "Content-Type": "application/json" },
 			"body": JSON.stringify({
-				world,
 				"email": ei.value,
 			})
 		}).then(r => status.call(this, r));
@@ -70,7 +68,6 @@ function reset() {
 			"method": "PATCH",
 			"headers": { "Accept": "application/json", "Content-Type": "application/json" },
 			"body": JSON.stringify({
-				uuid, world,
 				"password": (await sha256(pi.value)),
 				"password_confirmation": (await sha256(ci.value)),
 			})

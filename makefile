@@ -13,13 +13,18 @@ default: build
 BIN = ./bin
 DIST = ./dist
 
+.ifndef AUTH_SERVER
+.error "AUTH_SERVER command is not defined. Hej då."
+.endif
+
 .ifndef WEBSITE_DEST
 .error "WEBSITE_DEST command is not defined. Hej då."
 .endif
 
 build: deps mustache
-	@printf "%s" ${WEBSITE_S3BUCKET} > templates/s3bucket.mustache
-	${BIN}/build
+	@ printf "%s" ${WEBSITE_S3BUCKET} > templates/s3bucket.mustache
+	@ printf "<script> window.AUTH_SERVER_URL = \"%s\";</script>" ${AUTH_SERVER} > templates/auth.mustache
+	@ ${BIN}/build
 
 start:
 	${HTTP_SERVER} --port ${WEBSITE_PORT} --dir ${DIST}
