@@ -1,4 +1,4 @@
-<link href="/stylesheets/password-form.css" rel="stylesheet">
+<link href="{{> base}}/stylesheets/password-form.css" rel="stylesheet">
 
 <style>
   p:last-child {
@@ -6,10 +6,10 @@
   }
 </style>
 
-<script src="/lib/login.js"></script>
+<script src="{{> base}}/lib/login.js"></script>
 
 <script type="module">
-  import flash from "/lib/flash.js";
+  import flash from "{{> base}}/lib/flash.js";
 
   const flashy = new flash();
 
@@ -20,7 +20,7 @@
     const a = document.createElement('a');
     p.innerText = "Don't have an account? Create one ";
     a.innerText = "here";
-    a.href = "/subscribe/?select=account";
+    a.href = "{{> base}}/subscribe/?select=account";
 
     p.append(a);
 
@@ -32,7 +32,7 @@
 
     const a = document.createElement('a');
     a.innerText = "Forgot password?";
-    a.href = "/password-reset";
+    a.href = "{{> base}}/password-reset";
 
     p.append(a);
 
@@ -45,7 +45,7 @@
         "server": atob("aHR0cHM6Ly9ub29wLm51L2F1dGg="),
         "world": "eae",
         "submit_text": "Login",
-        "success": _ => window.location = "/tool/s/",
+        "success": _ => window.location = "{{> base}}/tool/s/",
         "error": m => flashy.push(m)
       }),
       account(),
