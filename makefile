@@ -16,6 +16,7 @@ build: deps mustache
 .endif
 
 	@ printf "%s" ${WEBSITE_S3BUCKET} > templates/s3bucket.mustache
+	@ printf "<script> window.AUTH_SERVER_URL = \"%s\";</script>" ${AUTH_SERVER} > templates/auth.mustache
 	@ ${BIN}/build
 
 mustache:

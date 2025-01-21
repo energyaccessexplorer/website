@@ -39,4 +39,7 @@ if [ -d assets ]; then
 	rsync --recursive \
 		  --copy-links \
 		  assets/ dist
+	rsync --recursive \
+		  --copy-links \
+		  lib/ dist/lib
 fi

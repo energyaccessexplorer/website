@@ -1,5 +1,7 @@
 <link href="{{> base}}/stylesheets/password-form.css" rel="stylesheet">
 
+{{> auth}}
+
 <style>
   p:last-child {
     padding: 0 0 4em;
@@ -42,7 +44,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('body > main').append(
       login_setup({
-        "server": atob("aHR0cHM6Ly9ub29wLm51L2F1dGg="),
+        "server": window.AUTH_SERVER_URL,
         "world": "eae",
         "submit_text": "Login",
         "success": _ => window.location = "{{> base}}/tool/s/",
