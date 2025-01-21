@@ -250,7 +250,7 @@ import selectlist from "/tool/lib/selectlist.js";
 		data['jsondata']['account'] = ['both', 'account'].includes(typeselect.value);
 		data['jsondata']['mailing'] = ['both', 'mailing'].includes(typeselect.value);
 
-		const finalData = {
+		const formdata = {
 			...data,
 			token: localStorage.getItem('token')
 		};
@@ -260,7 +260,7 @@ import selectlist from "/tool/lib/selectlist.js";
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(finalData)
+			body: JSON.stringify(formdata)
 		})
 			.then(async r => {
 				const message = r?.response?.details?.errors?.[0]?.detail || "An unknown error occurred";
