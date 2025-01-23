@@ -1,4 +1,5 @@
 import selectlist from "/tool/lib/selectlist.js";
+import modal from "/lib/modal.js";
 
 (async function() {
 	const registration = window.AUTH_SERVER_URL;
