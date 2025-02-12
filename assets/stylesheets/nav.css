@@ -142,7 +142,7 @@ nav #navigation-links > a {
     cursor: pointer;
 
     fill: var(--the-white);
-    line-height: 1.5em;
+    line-height: 1.2em;
 
     height: 100%;
     width: 1.5em;
