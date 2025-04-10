@@ -7,11 +7,13 @@ h2 {
   top: 4em;
   right: 4em;
   display: flex;
+  align-items: center;
 }
 
 #badges img {
   width: 15em;
   max-height: 15em;
+  margin: auto 0.5em;
 }
 
 section.banner {
