@@ -247,7 +247,7 @@ import modal from "/lib/modal.js";
 
 			const v = form.querySelector(`[name=${f.n}]`).value;
 
-			data['jsondata'][f.n] = v;
+			data['jsondata'][f.n] = v.replace("'", '’');
 		}
 
 		data['jsondata']['areas_of_interest'] = (function() {
