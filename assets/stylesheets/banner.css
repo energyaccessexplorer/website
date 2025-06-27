@@ -91,16 +91,26 @@ section.banner #buttons button:nth-child(even) a {
 @media (max-width: 1080px) {
   section.banner {
     height: unset;
+    padding: 2em 1em;
+    box-sizing: border-box;
   }
 
   section.banner h1 {
     font-size: 2em;
+    padding: unset;
   }
 
   section.banner h3 {
     font-size: 1.2em;
+    padding: 0;
+  }
 
-    padding-left: 2em;
-    padding-right: 2em;
+  section.banner #buttons {
+    margin: 1em 0 0 0;
+  }
+
+  section.banner #buttons button {
+    font-size: 0.7em;
+    margin: 0.5em;
   }
 }

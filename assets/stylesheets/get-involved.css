@@ -1,0 +1,27 @@
+section {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+}
+
+section > div {
+  margin: 2em;
+}
+
+button {
+  background-color: var(--the-green);
+}
+
+button a {
+  color: white !important;
+}
+
+h3 {
+  padding: 0;
+}
+
+@media (max-width: 1080px) {
+  section {
+    flex-flow: column nowrap;
+  }
+}

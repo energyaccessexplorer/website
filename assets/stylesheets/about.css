@@ -6,7 +6,7 @@
   margin-bottom: 4em;
 }
 
-#audiences div {
+#audiences > div {
   width: 25%;
   margin-right: 2em;
 }
@@ -15,11 +15,11 @@
   margin-right: 0;
 }
 
-#audiences div h4 {
+#audiences > div h4 {
   height: 3em;
 }
 
-#audiences div img {
+#audiences > div img {
   width: 6em;
 }
 
@@ -31,4 +31,32 @@
   margin-right: 0;
   margin-left: 0;
   max-width: unset;
+}
+
+@media (max-width: 1080px) {
+  #audiences {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  #audiences .audience-head {
+    display: flex;
+    align-items: center;
+  }
+
+  #audiences > div {
+    width: 100%;
+    margin-bottom: 2em;
+    margin-right: 0;
+  }
+
+  #audiences > div img {
+    width: 4em;
+    height: fit-content;
+  }
+
+  #audiences > div h4 {
+    height: unset;
+    margin-left: 1em;
+  }
 }

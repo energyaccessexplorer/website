@@ -31,16 +31,15 @@ section#video iframe {
 
 @media (max-width: 1080px) {
   #badges {
-    position: static;
-    z-index: 2;
-    display: flex;
-    justify-content: end;
-    width: 100%;
+    position: initial;
   }
 
   #badges img {
-    width: 10em;
-    max-height: 10em;
+    width: 3em !important;
+  }
+
+  #badges img[src="/images/fog-2025.png"] {
+    width: 5em !important;
   }
 
   section#video iframe {
@@ -61,6 +60,6 @@ section#video iframe {
   }
 
   section.banner {
-    padding: 1em 0 2em 0;
+    padding: 2em 1em;
   }
 }

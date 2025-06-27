@@ -39,6 +39,18 @@
     width: 10em;
     height: 7em;
   }
+
+  @media (max-width: 1080px) {
+    #blogs-publications > div {
+      flex-flow: column nowrap;
+      box-sizing: content-box;
+    }
+
+    #blogs-publications p {
+      width: unset;
+      padding: 0;
+    }
+  }
 </style>
 
 <section id="blogs-publications">

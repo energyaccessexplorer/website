@@ -46,4 +46,12 @@ section.two-cols h2 {
   section {
     padding: 1em;
   }
+
+  section.two-cols {
+    display: block;
+  }
+
+  section.two-cols h2 {
+    max-width: unset;
+  }
 }
