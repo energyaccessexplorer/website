@@ -53,6 +53,7 @@
   #audiences > div img {
     width: 4em;
     height: fit-content;
+    max-height: 4em;
   }
 
   #audiences > div h4 {
