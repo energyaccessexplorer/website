@@ -25,7 +25,7 @@ nav:before {
 
   opacity: 0.15;
 
-  background-image: url(/images/nav-watermark.png);
+  background-image: url(/images/nav-watermark.png), url(./lib/images/nav-watermark.png);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
