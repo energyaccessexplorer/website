@@ -14,8 +14,8 @@
  
    opacity: 0.15;
  
--  background-image: url(/images/nav-watermark.png);
-+  background-image: url(../images/nav-watermark.png);
+-  background-image: url(/images/nav-watermark.png), url(./images/nav-watermark.png); /* other projects need the relative path */
++  background-image: url(/images/nav-watermark.png), url(../images/nav-watermark.png); /* other projects need the relative path */
    background-size: cover;
    background-position: center center;
    background-repeat: no-repeat;
