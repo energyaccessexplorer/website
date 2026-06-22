@@ -40,6 +40,12 @@ sync:
 		${DIST}/ \
 		${SSH_USER}@${SSH_HOST}:${WEBSITE_DEST}
 
+	@ rsync -OPrv \
+		--checksum \
+		--copy-links \
+		${DIST}/lib/fonts/ \
+		${SSH_USER}@${SSH_HOST}:/var/www/html/fonts/
+
 deploy: build sync
 
 .PHONY: build deps
