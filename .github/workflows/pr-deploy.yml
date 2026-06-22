@@ -48,9 +48,9 @@ jobs:
       - name: Make destination directory
         uses: appleboy/ssh-action@v1.1.0
         with:
-          host:     ${{ secrets.PR_DEPLOY_HOST }}
-          username: ${{ secrets.PR_DEPLOY_USER }}
-          port:     ${{ secrets.PR_DEPLOY_PORT }}
+          host:     ${{ vars.PR_DEPLOY_HOST }}
+          username: ${{ vars.PR_DEPLOY_USER }}
+          port:     ${{ vars.PR_DEPLOY_PORT }}
           key:      ${{ secrets.PR_DEPLOY_KEY }}
           script:   |
             mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/${{ env.DESTINATION }}
@@ -60,8 +60,8 @@ jobs:
         with:
           switches: --recursive --verbose
           path: dist/
-          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/$DESTINATION/
-          remote_host: ${{ secrets.PR_DEPLOY_HOST }}
-          remote_port: ${{ secrets.PR_DEPLOY_PORT }}
-          remote_user: ${{ secrets.PR_DEPLOY_USER }}
+          remote_path: ${{ vars.PR_DEPLOY_PATH }}/$DESTINATION/
+          remote_host: ${{ vars.PR_DEPLOY_HOST }}
+          remote_port: ${{ vars.PR_DEPLOY_PORT }}
+          remote_user: ${{ vars.PR_DEPLOY_USER }}
           remote_key:  ${{ secrets.PR_DEPLOY_KEY }}
