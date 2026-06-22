@@ -26,16 +26,31 @@ jobs:
           	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
           EOF
 
-      - name: Build the thing
+      - name: Build .env
+        run: |
+          cat <<- EOF >.env
+          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          	SSH_USER = ${{ vars.DEPLOY_USER }}
+          	SSH_HOST = ${{ vars.DEPLOY_HOST }}
+          	WEBSITE_DEST = ${{ vars.DEPLOY_PATH }}
+          EOF
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p ${{ vars.DEPLOY_PORT }} -H ${{ vars.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+          cat <<- EOF >> ~/.ssh/config
+          	Host ${{ vars.DEPLOY_HOST }}
+          		HostName ${{ vars.DEPLOY_HOST }}
+          		Port ${{ vars.DEPLOY_PORT }}
+          		User ${{ vars.DEPLOY_USER }}
+          		IdentityFile ~/.ssh/deploy_key
+          		StrictHostKeyChecking no
+          EOF
+
+      - name: Build and deploy
         run: |
           bmake build
-
-      - uses: burnett01/rsync-deployments@7.0.1
-        with:
-          switches: --recursive --verbose --delete-before
-          path: dist/
-          remote_host: ${{ vars.DEPLOY_HOST }}
-          remote_port: ${{ vars.DEPLOY_PORT }}
-          remote_user: ${{ vars.DEPLOY_USER }}
-          remote_path: ${{ vars.DEPLOY_PATH }}
-          remote_key:  ${{ secrets.DEPLOY_KEY }}
+          bmake sync
