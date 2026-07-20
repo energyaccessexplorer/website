@@ -1,0 +1,77 @@
+name: COMMIT DEPLOY
+
+on:
+  push:
+    branches: [ '**' ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Parse ticket tag from commit message
+        id: ticket
+        run: |
+          MSG=${{ toJSON(github.event.head_commit.message) }}
+          if [[ "$MSG" =~ \[Tests\ ([A-Z]+-[0-9]+)\] ]]; then
+            echo "id=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+            echo "matched=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "matched=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.ticket.outputs.matched == 'true'
+
+      - uses: actions/setup-go@v5
+        if: steps.ticket.outputs.matched == 'true'
+        with:
+          go-version: 'stable'
+
+      - name: Install build dependencies
+        if: steps.ticket.outputs.matched == 'true'
+        run: |
+          sudo apt-get install -y bmake curl
+
+      - name: Build .env
+        if: steps.ticket.outputs.matched == 'true'
+        run: |
+          cat <<- EOF >.env
+          	WEBSITE_DEST = ${{ secrets.PR_DEPLOY_PATH }}
+          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          EOF
+
+      - name: Build the thing
+        if: steps.ticket.outputs.matched == 'true'
+        run: |
+          printf "/${{ steps.ticket.outputs.id }}" > templates/base.mustache
+
+          bmake build
+
+      - name: Patch for relative paths
+        if: steps.ticket.outputs.matched == 'true'
+        run: |
+          patch -p1 <relative-paths.diff
+
+      - name: Make destination directory
+        if: steps.ticket.outputs.matched == 'true'
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host:     ${{ secrets.PR_DEPLOY_HOST }}
+          username: ${{ secrets.PR_DEPLOY_USER }}
+          port:     ${{ secrets.PR_DEPLOY_PORT }}
+          key:      ${{ secrets.PR_DEPLOY_KEY }}
+          script:   |
+            mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/${{ steps.ticket.outputs.id }}
+
+      - name: Deploy the thing
+        if: steps.ticket.outputs.matched == 'true'
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: --recursive --verbose
+          path: dist/
+          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/${{ steps.ticket.outputs.id }}/
+          remote_host: ${{ secrets.PR_DEPLOY_HOST }}
+          remote_port: ${{ secrets.PR_DEPLOY_PORT }}
+          remote_user: ${{ secrets.PR_DEPLOY_USER }}
+          remote_key:  ${{ secrets.PR_DEPLOY_KEY }}
