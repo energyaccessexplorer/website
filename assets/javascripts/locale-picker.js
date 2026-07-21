@@ -21,7 +21,7 @@
 
 	window.liveSettings = {
 		api_key: "e0fbb2a78c9b473f8c265e3bb1ca1a29",
-		staging: !!location.hostname.match(/localhost/),
+		staging: location.hostname.startsWith('protected.') || !!location.hostname.match(/localhost/),
 		picker: false,
 	};
 
