@@ -11,6 +11,26 @@
 
 	const STORAGE_KEY = 'locale';
 
+	function gated() {
+		return new URLSearchParams(location.search).has('lang')
+			|| location.hostname.startsWith('protected.')
+			|| !!localStorage.getItem(STORAGE_KEY);
+	}
+
+	if (!gated()) return;
+
+	window.liveSettings = {
+		api_key: "e0fbb2a78c9b473f8c265e3bb1ca1a29",
+		staging: !!location.hostname.match(/localhost/),
+		picker: false,
+	};
+
+	const txScript = document.createElement('script');
+	txScript.async = true;
+	txScript.type = "text/javascript";
+	txScript.src = "//cdn.transifex.com/live.js";
+	document.head.append(txScript);
+
 	function normalizeLocale(code) {
 		if (!code) return null;
 		const base = code.toLowerCase().split('-')[0].split('_')[0];
@@ -104,8 +124,6 @@
 	}
 
 	function init() {
-		if (!gated()) return;
-
 		const initial = detectLocale();
 		let txMapping = {};
 
