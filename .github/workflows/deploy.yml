@@ -30,9 +30,9 @@ jobs:
         run: |
           cat <<- EOF >.env
           	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
-          	SSH_USER = ${{ vars.DEPLOY_USER }}
-          	SSH_HOST = ${{ vars.DEPLOY_HOST }}
-          	WEBSITE_DEST = ${{ vars.DEPLOY_PATH }}
+          	SSH_USER = ${{ secrets.DEPLOY_USER }}
+          	SSH_HOST = ${{ secrets.DEPLOY_HOST }}
+          	WEBSITE_DEST = ${{ secrets.DEPLOY_PATH }}
           EOF
 
       - name: Set up SSH
@@ -40,12 +40,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p ${{ vars.DEPLOY_PORT }} -H ${{ vars.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -p ${{ secrets.DEPLOY_PORT }} -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
           cat <<- EOF >> ~/.ssh/config
-          	Host ${{ vars.DEPLOY_HOST }}
-          		HostName ${{ vars.DEPLOY_HOST }}
-          		Port ${{ vars.DEPLOY_PORT }}
-          		User ${{ vars.DEPLOY_USER }}
+          	Host ${{ secrets.DEPLOY_HOST }}
+          		HostName ${{ secrets.DEPLOY_HOST }}
+          		Port ${{ secrets.DEPLOY_PORT }}
+          		User ${{ secrets.DEPLOY_USER }}
           		IdentityFile ~/.ssh/deploy_key
           		StrictHostKeyChecking no
           EOF
