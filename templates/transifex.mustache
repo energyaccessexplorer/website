@@ -1,8 +1,13 @@
 <script>
   (function() {
+    const hasLang = new URLSearchParams(location.search).has('lang');
+    const isProtected = location.hostname.startsWith('protected.');
+    if (!hasLang && !isProtected) return;
+
     window.liveSettings = {
       api_key: "e0fbb2a78c9b473f8c265e3bb1ca1a29",
       staging: !!location.hostname.match(/localhost/),
+      picker: false,
     };
 
     const s = document.createElement('script');
@@ -10,6 +15,6 @@
     s.type = "text/javascript";
     s.src = "//cdn.transifex.com/live.js";
 
-    // document.head.append(s);
+    document.head.append(s);
   })();
 </script>
