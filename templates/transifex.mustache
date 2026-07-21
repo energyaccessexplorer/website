@@ -1,8 +1,9 @@
 <script>
   (function() {
-    const hasLang = new URLSearchParams(location.search).has('lang');
-    const isProtected = location.hostname.startsWith('protected.');
-    if (!hasLang && !isProtected) return;
+    window.localeEnabled = new URLSearchParams(location.search).has('lang')
+      || location.hostname.startsWith('protected.')
+      || !!localStorage.getItem('locale');
+    if (!window.localeEnabled) return;
 
     window.liveSettings = {
       api_key: "e0fbb2a78c9b473f8c265e3bb1ca1a29",

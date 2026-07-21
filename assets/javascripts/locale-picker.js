@@ -11,12 +11,6 @@
 
 	const STORAGE_KEY = 'locale';
 
-	function gated() {
-		const hasLang = new URLSearchParams(location.search).has('lang');
-		const isProtected = location.hostname.startsWith('protected.');
-		return hasLang || isProtected;
-	}
-
 	function normalizeLocale(code) {
 		if (!code) return null;
 		const base = code.toLowerCase().split('-')[0].split('_')[0];
