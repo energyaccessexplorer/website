@@ -1,0 +1,51 @@
+name: TRUNK TEST DEPLOY
+
+on:
+  push:
+    branches: [ trunk ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get install -y bmake curl
+
+      - name: Build .env
+        run: |
+          cat <<- EOF >.env
+          	WEBSITE_DEST = ${{ secrets.PR_DEPLOY_PATH }}
+          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          EOF
+
+      - name: Build the thing
+        run: |
+          bmake build
+
+      - name: Make destination directory
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host:     ${{ secrets.PR_DEPLOY_HOST }}
+          username: ${{ secrets.PR_DEPLOY_USER }}
+          port:     ${{ secrets.PR_DEPLOY_PORT }}
+          key:      ${{ secrets.PR_DEPLOY_KEY }}
+          script:   mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/trunk
+
+      - name: Deploy the thing
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: --recursive --verbose
+          path: dist/
+          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/trunk/
+          remote_host: ${{ secrets.PR_DEPLOY_HOST }}
+          remote_port: ${{ secrets.PR_DEPLOY_PORT }}
+          remote_user: ${{ secrets.PR_DEPLOY_USER }}
+          remote_key:  ${{ secrets.PR_DEPLOY_KEY }}
