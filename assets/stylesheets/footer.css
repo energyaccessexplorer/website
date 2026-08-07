@@ -28,7 +28,8 @@ footer > div > div:nth-child(2) {
 
 #footer-wri-logo {
   width: 550px;
-  height: auto;
+  height: auto !important;
+  object-fit: contain;
 }
 
 @media (max-width: 1080px) {
