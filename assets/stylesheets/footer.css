@@ -30,7 +30,7 @@ footer > div > div:nth-child(2) {
   width: 750px;
   max-width: 100%; 
   height: auto !important;
-  display: block;
+  object-fit: contain;
 }
 
 @media (max-width: 1080px) {
