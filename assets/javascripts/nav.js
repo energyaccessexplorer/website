@@ -8,7 +8,11 @@ let d = "";
 
 if (localStorage['token']) {
 	m.href = window.BASE + '/tool/m';
-	m.innerText = 'My EAE';
+
+	const s = document.createElement('span');
+	s.innerText = 'My EAE';
+	s.dataset.t = 'nav.my_eae';
+	m.append(s);
 
 	d = document.createElement('div');
 	d.id = 'my-eae-dropdown';
@@ -16,16 +20,19 @@ if (localStorage['token']) {
 	e = document.createElement('a');
 	e.href = window.BASE + '/tool/m';
 	e.innerText = 'Dashboard';
+	e.dataset.t = 'nav.dashboard';
 
 	o = document.createElement('a');
 	o.innerText = "Log Out";
 	o.href = window.BASE + '/login';
+	o.dataset.t = 'nav.logout';
 
 	d.append(e, o);
 	m.append(d);
 } else {
 	m.href = window.BASE + '/login';
 	m.innerText = 'Login';
+	m.dataset.t = 'nav.login';
 }
 
 c.append(m);

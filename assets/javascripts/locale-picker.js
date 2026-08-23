@@ -17,19 +17,22 @@
 			|| !!localStorage.getItem(STORAGE_KEY);
 	}
 
-	if (!gated()) return;
+	let booted = false;
+	let applyLocaleFn = null;
 
-	window.liveSettings = {
-		api_key: "e0fbb2a78c9b473f8c265e3bb1ca1a29",
-		staging: location.hostname.startsWith('protected.') || !!location.hostname.match(/localhost/),
-		picker: false,
-	};
+	function loadTransifex() {
+		window.liveSettings = {
+			api_key: "e0fbb2a78c9b473f8c265e3bb1ca1a29",
+			staging: location.hostname.startsWith('protected.') || location.hostname.startsWith('test.') || !!location.hostname.match(/localhost/),
+			picker: false,
+		};
 
-	const txScript = document.createElement('script');
-	txScript.async = true;
-	txScript.type = "text/javascript";
-	txScript.src = "//cdn.transifex.com/live.js";
-	document.head.append(txScript);
+		const txScript = document.createElement('script');
+		txScript.async = true;
+		txScript.type = "text/javascript";
+		txScript.src = "//cdn.transifex.com/live.js";
+		document.head.append(txScript);
+	}
 
 	function normalizeLocale(code) {
 		if (!code) return null;
@@ -123,8 +126,12 @@
 		});
 	}
 
-	function init() {
-		const initial = detectLocale();
+	function boot(initial) {
+		if (booted) return;
+		booted = true;
+
+		loadTransifex();
+
 		let txMapping = {};
 
 		function applyLocale(code) {
@@ -141,17 +148,32 @@
 			});
 		}
 
-		withTransifex(live => {
-			txMapping = buildTransifexMapping(live);
-			applyLocale(initial);
-		});
+		applyLocaleFn = applyLocale;
 
 		renderPicker(initial, applyLocale);
+		applyLocale(initial);
+
+		withTransifex(live => {
+			txMapping = buildTransifexMapping(live);
+
+			const txCode = txMapping[normalizeLocale(window.LOCALE) || 'en'];
+			if (txCode && live.translateTo) {
+				live.translateTo(txCode);
+			}
+		});
+	}
+
+	function init() {
+		if (gated()) boot(detectLocale());
 
 		window.addEventListener('storage', e => {
-			if (e.key === STORAGE_KEY && e.newValue) {
-				applyLocale(e.newValue);
-			}
+			if (e.key !== STORAGE_KEY || !e.newValue) return;
+
+			const code = normalizeLocale(e.newValue);
+			if (!code) return;
+
+			if (booted) applyLocaleFn(code);
+			else boot(code);
 		});
 	}
 
