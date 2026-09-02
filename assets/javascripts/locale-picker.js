@@ -7,8 +7,6 @@
 		'zh': '中文',
 	};
 
-	const MENU_HIDDEN = ['zh'];
-
 	const STORAGE_KEY = 'locale';
 
 	function gated() {
@@ -99,8 +97,6 @@
 		dropdown.id = 'locale-dropdown';
 
 		for (const [code, label] of Object.entries(SUPPORTED)) {
-			if (MENU_HIDDEN.includes(code) && code !== current) continue;
-
 			const item = document.createElement('a');
 			item.href = '#';
 			item.textContent = label;
