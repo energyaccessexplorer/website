@@ -2,7 +2,7 @@ name: COMMIT DEPLOY
 
 on:
   push:
-    branches: [ '**', '!trunk', '!production' ]
+    branches: [ '**', '!main' ]
 
 jobs:
   build-deploy:

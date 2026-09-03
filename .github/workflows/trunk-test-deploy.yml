@@ -1,8 +1,8 @@
-name: TRUNK TEST DEPLOY
+name: MAIN TEST DEPLOY
 
 on:
   push:
-    branches: [ trunk ]
+    branches: [ main ]
 
 jobs:
   build-deploy:
@@ -37,14 +37,14 @@ jobs:
           username: ${{ secrets.PR_DEPLOY_USER }}
           port:     ${{ secrets.PR_DEPLOY_PORT }}
           key:      ${{ secrets.PR_DEPLOY_KEY }}
-          script:   mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/trunk
+          script:   mkdir -p ${{ secrets.PR_DEPLOY_PATH }}/main
 
       - name: Deploy the thing
         uses: burnett01/rsync-deployments@7.0.1
         with:
           switches: --recursive --verbose
           path: dist/
-          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/trunk/
+          remote_path: ${{ secrets.PR_DEPLOY_PATH }}/main/
           remote_host: ${{ secrets.PR_DEPLOY_HOST }}
           remote_port: ${{ secrets.PR_DEPLOY_PORT }}
           remote_user: ${{ secrets.PR_DEPLOY_USER }}
