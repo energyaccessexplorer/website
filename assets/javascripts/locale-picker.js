@@ -9,9 +9,39 @@
 
 	const STORAGE_KEY = 'locale';
 
+	// Which locales each environment offers (EAE-515/EAE-516): the French
+	// translations go live in every environment, the Simplified Chinese ones
+	// only in protected so far. The website has no window.ENV (it is mustache,
+	// not the tool), so the subdomain is the only environment signal.
+	const ENV_LOCALES = {
+		'public':    ['en', 'fr'],
+		'protected': ['en', 'fr', 'zh'],
+		'training':  ['en', 'fr'],
+		'test':      ['en', 'fr', 'zh'],
+		'dev':       ['en', 'fr', 'zh'],
+	};
+
+	function env() {
+		// The site is served as <env>.energyaccessexplorer.org, so the first label
+		// is the environment; www and the bare apex (plus localhost) are public.
+		const parts = location.hostname.split('.');
+		return parts.length < 3 || parts[0] === 'www' ? 'public' : parts[0];
+	}
+
+	function available() {
+		const allowed = new Set(ENV_LOCALES[env()] ?? ['en']);
+
+		// ?lang= stays an explicit escape hatch: translators and ticket previews
+		// use it on hosts where the locale is not deployed.
+		const override = normalizeLocale(new URLSearchParams(location.search).get('lang'));
+		if (override) allowed.add(override);
+
+		return allowed;
+	}
+
 	function gated() {
 		return new URLSearchParams(location.search).has('lang')
-			|| location.hostname.startsWith('protected.')
+			|| available().size > 1
 			|| !!localStorage.getItem(STORAGE_KEY);
 	}
 
@@ -40,10 +70,13 @@
 
 	function detectLocale() {
 		const params = new URLSearchParams(location.search);
-		return normalizeLocale(params.get('lang'))
-			|| normalizeLocale(localStorage.getItem(STORAGE_KEY))
-			|| normalizeLocale(navigator.language)
-			|| 'en';
+		const allowed = available();
+
+		return [
+			normalizeLocale(params.get('lang')),
+			normalizeLocale(localStorage.getItem(STORAGE_KEY)),
+			normalizeLocale(navigator.language),
+		].find(l => l && allowed.has(l)) || 'en';
 	}
 
 	function transifexReady() {
@@ -66,7 +99,10 @@
 		const languages = live.getAllLanguages() || [];
 		const map = {};
 
+		const allowed = available();
+
 		for (const code of Object.keys(SUPPORTED)) {
+			if (!allowed.has(code)) continue;
 			const match = languages.find(l =>
 				l.code === code
 				|| l.code.toLowerCase() === code
@@ -96,7 +132,11 @@
 		const dropdown = document.createElement('div');
 		dropdown.id = 'locale-dropdown';
 
+		const allowed = available();
+
 		for (const [code, label] of Object.entries(SUPPORTED)) {
+			if (!allowed.has(code) && code !== current) continue;
+
 			const item = document.createElement('a');
 			item.href = '#';
 			item.textContent = label;
@@ -166,7 +206,7 @@
 			if (e.key !== STORAGE_KEY || !e.newValue) return;
 
 			const code = normalizeLocale(e.newValue);
-			if (!code) return;
+			if (!code || !available().has(code)) return;
 
 			if (booted) applyLocaleFn(code);
 			else boot(code);
