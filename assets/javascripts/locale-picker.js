@@ -49,9 +49,20 @@
 	let applyLocaleFn = null;
 
 	function loadTransifex() {
+		// Read Transifex's *staging* build from every environment. The project's
+		// production build lists no target languages (the public manifest's
+		// `languages.production` is empty and /latest/fr.jsonp is a 403), so a
+		// public page pointed at it renders English no matter what the locale
+		// menu says — the fr translations of the website's own strings only ever
+		// landed in the staging build, which protected/test/localhost already
+		// read. Now that the tool has its own in-repo translations and no longer
+		// uses Transifex, the website is its only consumer; live.js picks a build
+		// once at load and cannot switch later, so this must be decided here
+		// (EAE-515/EAE-516). The per-environment difference that remains is which
+		// locales the menu offers (ENV_LOCALES below).
 		window.liveSettings = {
 			api_key: "e0fbb2a78c9b473f8c265e3bb1ca1a29",
-			staging: location.hostname.startsWith('protected.') || location.hostname.startsWith('test.') || !!location.hostname.match(/localhost/),
+			staging: true,
 			picker: false,
 		};
 
