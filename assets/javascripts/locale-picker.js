@@ -11,17 +11,22 @@
 
 	// Which locales each environment offers (EAE-515/EAE-516): the French
 	// translations go live in every environment, the Simplified Chinese ones
-	// only in protected so far. The website has no window.ENV (it is mustache,
-	// not the tool), so the subdomain is the only environment signal.
+	// everywhere except public (www) so far. The website has no window.ENV (it
+	// is mustache, not the tool), so the subdomain is the only environment signal.
 	const ENV_LOCALES = {
 		'public':    ['en', 'fr'],
 		'protected': ['en', 'fr', 'zh'],
-		'training':  ['en', 'fr'],
+		'training':  ['en', 'fr', 'zh'],
 		'test':      ['en', 'fr', 'zh'],
 		'dev':       ['en', 'fr', 'zh'],
 	};
 
 	function env() {
+		// Transifex Live's editor proxies the page through
+		// <hash>.live-proxy.transifex.com and only unlocks publishing once it sees
+		// the snippet load, so treat it as an environment that offers everything.
+		if (location.hostname.endsWith('.live-proxy.transifex.com')) return 'dev';
+
 		// The site is served as <env>.energyaccessexplorer.org, so the first label
 		// is the environment; www and the bare apex (plus localhost) are public.
 		const parts = location.hostname.split('.');
