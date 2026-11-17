@@ -6,7 +6,14 @@ default: build
 # WEBSITE_DEST = /var/www/path
 # SSH_USER = www
 # SSH_HOST = srv.example.org
+# SUPABASE_URL = https://ref.supabase.co
+# SUPABASE_ANON_KEY = sb_publishable_...
 #
+# Supabase Auth, read by assets/javascripts/supabase.js. The key is public by
+# design; the dev-server rewrites both values to the local gateway in local builds.
+SUPABASE_URL ?= https://fjuzeptiewrqfxunivnu.supabase.co
+SUPABASE_ANON_KEY ?= sb_publishable_fyBFmd4Q_XsbecX6_9-h_w_1_EQz0lF
+
 BIN = ./bin
 DIST = ./dist
 
@@ -16,6 +23,7 @@ build: deps mustache
 .endif
 
 	@ printf "%s" ${WEBSITE_S3BUCKET} > templates/s3bucket.mustache
+	@ printf '{"url": "%s", "key": "%s"}' ${SUPABASE_URL} ${SUPABASE_ANON_KEY} > templates/supabase.mustache
 	@ ${BIN}/build
 
 mustache:

@@ -1,0 +1,62 @@
+# PR previews on Supabase.
+name: SUPABASE PR DEPLOY
+
+on:
+  pull_request:
+    branches: [ trunk ]
+
+env:
+  DESTINATION: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get install -y bmake curl awscli
+
+      - name: Build .env
+        run: |
+          cat <<- EOF >.env
+          	WEBSITE_DEST = /preview/${{ env.DESTINATION }}
+          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          EOF
+
+      - name: Build
+        run: |
+          printf "/preview/${{ env.DESTINATION }}" > templates/base.mustache
+          bmake build
+
+      - name: Patch for relative paths
+        run: |
+          patch -p1 <relative-paths.diff
+
+      - name: Deploy to Supabase Storage
+        run: |
+          aws s3 sync dist/ "s3://${{ vars.SUPABASE_BUCKET }}/preview/${{ env.DESTINATION }}/website/" \
+            --endpoint-url "https://${{ vars.SUPABASE_PROJECT_REF }}.supabase.co/storage/v1/s3" \
+            --delete
+        env:
+          AWS_ACCESS_KEY_ID:     ${{ secrets.SUPABASE_STORAGE_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SUPABASE_STORAGE_SECRET }}
+          AWS_DEFAULT_REGION:    us-east-1
+
+      - name: Comment preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `${{ vars.SUPABASE_SITE_ROUTER_URL }}/preview/${{ env.DESTINATION }}/website/`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `[Supabase track] Website preview deployed: ${url}`,
+            });

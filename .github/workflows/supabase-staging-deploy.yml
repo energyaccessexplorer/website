@@ -1,0 +1,43 @@
+# Supabase deploy for the "staging" environment.
+name: SUPABASE STAGING DEPLOY
+
+on:
+  push:
+    branches: [ staging ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get install -y bmake curl awscli
+
+      - name: Build .env
+        run: |
+          cat <<- EOF >.env
+          	WEBSITE_DEST = /staging
+          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          EOF
+
+      - name: Build
+        run: |
+          printf "/staging" > templates/base.mustache
+          bmake build
+
+      - name: Deploy to Supabase Storage
+        run: |
+          aws s3 sync dist/ "s3://${{ vars.SUPABASE_BUCKET }}/staging/website/" \
+            --endpoint-url "https://${{ vars.SUPABASE_PROJECT_REF }}.supabase.co/storage/v1/s3" \
+            --delete
+        env:
+          AWS_ACCESS_KEY_ID:     ${{ secrets.SUPABASE_STORAGE_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SUPABASE_STORAGE_SECRET }}
+          AWS_DEFAULT_REGION:    us-east-1
