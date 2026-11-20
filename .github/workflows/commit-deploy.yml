@@ -7,12 +7,15 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    # The Supabase project this branch builds against.
+    environment: staging
 
     steps:
       - name: Parse ticket tag from commit message
         id: ticket
+        env:
+          MSG: ${{ github.event.head_commit.message }}
         run: |
-          MSG=${{ toJSON(github.event.head_commit.message) }}
           if [[ "$MSG" =~ \[Tests\ ([A-Z]+-[0-9]+)\] ]]; then
             echo "id=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
             echo "matched=true" >> "$GITHUB_OUTPUT"
@@ -47,12 +50,21 @@ jobs:
           git merge --no-edit "origin/$BASE"
           test "$(git rev-list --count HEAD..origin/$BASE)" = "0"
 
+      - name: Check the staging environment
+        if: steps.ticket.outputs.matched == 'true'
+        run: |
+          test -n "${{ vars.SUPABASE_URL }}" && test -n "${{ vars.SUPABASE_ANON_KEY }}" || {
+            echo "::error::the staging environment needs the variables SUPABASE_URL and SUPABASE_ANON_KEY"
+            exit 1
+          }
+
       - name: Build .env
         if: steps.ticket.outputs.matched == 'true'
         run: |
           cat <<- EOF >.env
           	WEBSITE_DEST = ${{ secrets.PR_DEPLOY_PATH }}
-          	WEBSITE_S3BUCKET = ${{ vars.WEBSITE_S3BUCKET }}
+          SUPABASE_URL = ${{ vars.SUPABASE_URL }}
+          SUPABASE_ANON_KEY = ${{ vars.SUPABASE_ANON_KEY }}
           EOF
 
       - name: Build the thing

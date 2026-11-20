@@ -5,6 +5,10 @@
 {{> google}}
 
 <script>
+  window.SUPABASE = {{> supabase}};
+</script>
+
+<script>
   window.BASE = "";
 
   if (location.hostname.match(/^(test|dev)/))

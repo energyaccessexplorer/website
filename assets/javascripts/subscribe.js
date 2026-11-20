@@ -1,8 +1,9 @@
 import selectlist from "/tool/lib/selectlist.js";
 import modal from "/lib/modal.js";
 
+import { signup, error_message } from "./supabase.js";
+
 (async function() {
-	const mailing = "aHR0cHM6Ly9ub29wLm51L2JvdW5jZXI=";
 	const world = "https://world.energyaccessexplorer.org";
 	const url = new URL(location);
 
@@ -51,32 +52,8 @@ import modal from "/lib/modal.js";
 	}];
 
 	const data = {
-		list_id: '2defa3ad-5193-48ae-b186-dd1446cdca5b',
-		settings: {},
 		jsondata: {},
 	};
-
-	function tokenfail() {
-		const m = document.querySelector("main section");
-		const p = document.createElement("p");
-		p.className = "error";
-
-		p.innerText = "Something went wrong with our setup. Could you come back later, please?";
-		m.append(p);
-	};
-
-	const token = await fetch(atob(mailing) + '/token')
-		.catch(e => tokenfail)
-		.then(r => {
-			if (!r.ok) {
-				tokenfail();
-				throw "Failed to get token."
-			}
-
-			return r;
-		})
-		.then(r => r.text())
-		.then(x => data['cfs'] = x);
 
 	const form = document.createElement('form');
 
@@ -210,6 +187,22 @@ import modal from "/lib/modal.js";
 
 	form.prepend(typeselect);
 
+	// Every registration creates a Supabase Auth account, so a password is
+	// always part of it; the mailing-list choice travels in the account's
+	// metadata, which becomes public.users.about.
+	const passwords = ['password', 'password_confirmation'].map(n => {
+		const i = document.createElement('input');
+		i.type = 'password';
+		i.name = n;
+		i.placeholder = (n === 'password') ? 'Password' : 'Confirm password';
+		i.setAttribute('autocomplete', 'new-password');
+		i.setAttribute('required', '');
+
+		form.append(i);
+
+		return i;
+	});
+
 	fetch(world + '/countries?select=name')
 		.then(r => r.json())
 		.then(countries => {
@@ -234,8 +227,18 @@ import modal from "/lib/modal.js";
 			form.append(submit);
 		});
 
-	form.onsubmit = function(e) {
+	form.onsubmit = async function(e) {
 		e.preventDefault();
+
+		if (passwords[0].value !== passwords[1].value) {
+			const p = document.createElement('p');
+			p.className = 'warn';
+			p.innerText = "The two passwords are not the same.";
+
+			document.querySelector('section').append(p);
+
+			return;
+		}
 
 		for (const i of form.querySelectorAll('input,button,select'))
 			i.setAttribute('disabled', '');
@@ -264,26 +267,15 @@ import modal from "/lib/modal.js";
 		data['jsondata']['account'] = ['both', 'account'].includes(typeselect.value);
 		data['jsondata']['mailing'] = ['both', 'mailing'].includes(typeselect.value);
 
-		fetch(atob(mailing) + '/signup', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json;charset=utf-8;'
-			},
-			body: JSON.stringify(data)
-		})
-			.then(async r => {
-				const p = document.createElement('p');
-				p.className = 'status';
-				p.innerText = await r.text();
-				document.querySelector('section').append(p);
+		const r = await signup(data['email'], passwords[0].value, data['jsondata']);
 
-				if (r.status < 400)
-					p.className = 'status';
-				else if (r.status < 500)
-					p.className = 'warn';
-				else
-					p.className = 'error';
-			});
+		const p = document.createElement('p');
+		p.className = r.ok ? 'status' : 'warn';
+		p.innerText = !r.ok ? error_message(r)
+			: (r.body.access_token ? "Account created. You can log in now."
+			                       : "We sent you an email to confirm your account.");
+
+		document.querySelector('section').append(p);
 	};
 
 	document.querySelector('main section').append(form);

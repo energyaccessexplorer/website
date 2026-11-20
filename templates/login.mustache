@@ -6,10 +6,9 @@
   }
 </style>
 
-<script src="{{> base}}/lib/login.js"></script>
-
 <script type="module">
   import flash from "{{> base}}/lib/flash.js";
+  import login_setup from "{{> base}}/javascripts/login.js";
 
   const flashy = new flash();
 
@@ -42,8 +41,6 @@
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('body > main').append(
       login_setup({
-        "server": atob("aHR0cHM6Ly9ub29wLm51L2F1dGg="),
-        "world": "eae",
         "submit_text": "Login",
         "success": _ => window.location = "{{> base}}/tool/s/",
         "error": m => flashy.push(m)
